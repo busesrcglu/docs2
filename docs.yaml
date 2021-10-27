@@ -1,0 +1,421 @@
+---
+openapi: 3.0.2
+info:
+  title: Rhoova API Documentation
+  version: 1.0.1
+paths:
+
+  "/tasks/yield-curve":
+    post:
+      summary: Create Yield Curve Calculation
+      tags:
+      - calculations
+      requestBody:
+        description: Client object
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - valuationDate
+              - endOfMonth
+              - yieldCurve
+              - yieldData
+              - zeroRates
+              - forwardRates
+              - discountRates
+              type: object
+              properties:
+                valuationDate:
+                  type: string(YYYY-MM-DD)
+                  format: date
+                  description: Target valuation date.
+                endOfMonth:
+                  type: boolean
+                  description: Adjust to end of month rule applied to the schedule
+                zeroRates:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    analysisDates:
+                      type:
+                      - array
+                      - 'null'
+                      items:
+                        type: string
+                        format: date
+                    compounding:
+                      type:
+                      - string
+                      - 'null'
+                      enum:
+                      - Continuous
+                      - Compounded
+                      - CompoundedThenSimple
+                      - Simple
+                      - SimpleThenCompounded
+                      default: Continuous
+                    frequency:
+                      type:
+                      - string
+                      - 'null'
+                      default: Annual
+                      enum:
+                      - NoFrequency
+                      - Once
+                      - Annual
+                      - Semiannual
+                      - EveryFourthMonth
+                      - Quarterly
+                      - Bimonthly
+                      - Monthly
+                      - EveryFourthWeek
+                      - Biweekly
+                      - Weekly
+                      - Daily
+                      - OtherFrequency
+                      description: Schedule payment frequency.
+                forwardRates:
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - startEndDates
+                  - endDate
+                  properties:
+                    startEndDates:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - startDate
+                        - endDate
+                        properties:
+                          startDate:
+                            type: string(YYYY-MM-DD)
+                            format: date
+                          endDate:
+                            type: string(YYYY-MM-DD)
+                            format: date
+                    endDate:
+                      type: string(YYYY-MM-DD)
+                      format: date
+                    compounding:
+                      type:
+                      - string
+                      - 'null'
+                      default: Continuous
+                      enum:
+                      - Continuous
+                      - Compounded
+                      - CompoundedThenSimple
+                      - Simple
+                      - SimpleThenCompounded
+                    frequency:
+                      type:
+                      - string
+                      - 'null'
+                      default: Annual
+                      enum:
+                      - NoFrequency
+                      - Once
+                      - Annual
+                      - Semiannual
+                      - EveryFourthMonth
+                      - Quarterly
+                      - Bimonthly
+                      - Monthly
+                      - EveryFourthWeek
+                      - Biweekly
+                      - Weekly
+                      - Daily
+                      - OtherFrequency
+                      description: Schedule payment frequency
+                discountRates:
+                  type: array
+                  items:
+                    type: string(YYYY-MM-DD)
+                    format: date
+                yieldCurve:
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - settlementDays
+                  - intpMethod
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - instruments
+                  properties:
+                    settlementDays:
+                      type: Integer
+                      description: Curve settlement days
+                    intpMethod:
+                      type: string(intpMethod)
+                      enum:
+                      - Linear
+                      - LogLinear
+                      - Cubic
+                      - LogCubic
+                    currency:
+                      type: string
+                      description: 3 letter ISO currency code
+                    calendar:
+                      type: string
+                      description: Schedule calendar
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Argentina
+                      - NullCalendar
+                      - Russia
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      enum:
+                      - Actual360
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                      description: Accrual day counter
+                    period:
+                      type: string
+                      description: Schedule payment period
+                    instruments:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        DEPO:
+                          type: object
+                          additionalProperties: false
+                          required:
+                          - businessDayConvention
+                          - dayCounter
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                              description: Accrual day counter
+                        FUTURES:
+                          type: object
+                          additionalProperties: false
+                          required:
+                          - businessDayConvention
+                          - dayCounter
+                          - market
+                          - usedates
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                              description: Accrual day counter
+                            market:
+                              type: string
+                            usedates:
+                              type: boolean
+                        IRS:
+                          type: object
+                          additionalProperties: false
+                          required:
+                          - businessDayConvention
+                          - dayCounter
+                          - frequency
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                              description: Accrual day counter
+                            frequency:
+                              type: string
+                              enum:
+                              - NoFrequency
+                              - Once
+                              - Annual
+                              - Semiannual
+                              - EveryFourthMonth
+                              - Quarterly
+                              - Bimonthly
+                              - Monthly
+                              - EveryFourthWeek
+                              - Biweekly
+                              - Weekly
+                              - Daily
+                              - OtherFrequency
+                              description: Schedule payment frequency.
+                    applyShock:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                        - tenor
+                        - shockValue
+                        properties:
+                          tenor:
+                            type: string
+                          shockValue:
+                            type: double
+                yieldData:
+                  type: array(Array of objects(YieldData))
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - valuationDate
+                    - currency
+                    - instrument
+                    - tenor
+                    - value
+                    properties:
+                      valuationDate:
+                        type: string(YYYY-MM-DD)
+                        format: date
+                        description: Target valuation date
+                      maturityDate:
+                        type: string(YYYY-MM-DD)
+                        format: date
+                        description: Target maturity date
+                      currency:
+                        type: string
+                        description: 3 letter ISO currency code
+                      instrument:
+                        type: string
+                        description: Type of yield instrument
+                      tenor:
+                        type: string
+                        description: Schedule payment period
+                      value:
+                        type: number
+                        description: Yield value
+                      period:
+                        type: string
+                        description: Schedule payment period
+                      settlementDate:
+                        type: string
+                        description: Settlement date of data as period
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskId:
+                    type: string
+
+servers:
+- url: "{apiUrl}/api"
+  variables:
+    apiUrl:
+      default: https://app.rhoova.com
+      enum:
+      - https://app.rhoova.com
+tags: []
