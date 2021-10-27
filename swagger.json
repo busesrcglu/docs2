@@ -1,1781 +1,418 @@
-{
-  "openapi": "3.0.2",
-  "info": {
-    "title": "Rhoova API Documentation",
-    "version": "1.0.1"
-  },
-  "paths": {
-    "/tasks/{task_id}": {
-      "get": {
-        "summary": "Get Calculation Result",
-        "operationId": "getCalculation",
-        "security": [
-          {
-            "BearerAuth": [
-              "read:client"
-            ]
-          }
-        ],
-        "tags": [
-          "calculations"
-        ],
-        "parameters": [
-          {
-            "name": "taskId",
-            "in": "path",
-            "description": "Task id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get Calculation Result",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pid": {
-                      "type": "string",
-                      "description": "Your calculation identifier"
-                    },
-                    "request_time": {
-                      "type": "string(dateTime)",
-                      "description": "When the calculation was created"
-                    },
-                    "result": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "data": {
-                          "type": "Array of objects",
-                          "additionalProperties": false,
-                          "properties": {
-                            "effectiveness": {
-                              "type": "number"
-                            },
-                            "presentValue": {
-                              "type": "number"
-                            },
-                            "zeroRate": {
-                              "type": "number"
-                            },
-                            "discountFactor": {
-                              "type": "number"
-                            },
-                            "realizedCF": {
-                              "type": "number"
-                            },
-                            "termToMatByDay": {
-                              "type": "number"
-                            },
-                            "termToMatByYear": {
-                              "type": "number"
-                            },
-                            "accrued": {
-                              "type": "number"
-                            },
-                            "beginDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "totalPresentValue": {
-                          "type": "number"
-                        },
-                        "totalAccrued": {
-                          "type": "number"
-                        },
-                        "totalEffectiveness": {
-                          "type": "number"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tasks/{calculationName}": {
-      "post": {
-        "summary": "Calculate Method",
-        "description": "RPEngineClient.core.calculate({calculationName: 'calculation-name',data: {calculation parameters} })",
-        "operationId": "calculateMethodNode",
-        "tags": [
-          "nodeClient"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "calculationName",
-                  "data"
-                ],
-                "type": "object",
-                "properties": {
-                  "calculationName": {
-                    "type": "string",
-                    "description": "Name of the calculation to create.Multi-word nouns are separated by hyphens (-). For example: 'fixed-rate-bond'",
-                    "readOnly": true
-                  },
-                  "data": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "Calculation parameters should be added"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "taskId": {
-                      "type": "string",
-                      "readOnly": true,
-                      "description": "Your calculation identifier"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tasks/yield-curve": {
-      "post": {
-        "summary": "Create Yield Curve Calculation",
-        "security": [
-          {
-            "BearerAuth": [
-              "read:client"
-            ]
-          }
-        ],
-        "tags": [
-          "calculations"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "valuationDate",
-                  "endOfMonth",
-                  "yieldCurve",
-                  "yieldData",
-                  "zeroRates",
-                  "forwardRates",
-                  "discountRates"
-                ],
-                "type": "object",
-                "properties": {
-                  "valuationDate": {
-                    "type": "string(YYYY-MM-DD)",
-                    "format": "date",
-                    "description": "Target valuation date."
-                  },
-                  "endOfMonth": {
-                    "type": "boolean",
-                    "description": "Adjust to end of month rule applied to the schedule"
-                  },
-                  "zeroRates": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": [ ],
-                    "properties": {
-                      "analysisDates": {
-                        "type": [
-                          "array",
-                          "null"
-                        ],
-                        "items": {
-                          "type": "string",
-                          "format": "date"
-                        }
-                      },
-                      "compounding": {
-                        "type": [
-                          "string",
-                          "null"
-                        ],
-                        "enum": [
-                          "Continuous",
-                          "Compounded",
-                          "CompoundedThenSimple" ,
-                          "Simple" ,
-                          "SimpleThenCompounded"
-                        ],
-                        "default": "Continuous"
-                      },
-                      "frequency": {
-                        "type": ["string", "null"],
-                        "default": "Annual",
-                        "enum": [
-                          "NoFrequency",
-                          "Once",
-                          "Annual",
-                          "Semiannual",
-                          "EveryFourthMonth",
-                          "Quarterly",
-                          "Bimonthly",
-                          "Monthly",
-                          "EveryFourthWeek",
-                          "Biweekly",
-                          "Weekly",
-                          "Daily",
-                          "OtherFrequency"
-                        ],
-                        "description": "Schedule payment frequency."
-                      }
-                    }
-                  },
-                  "forwardRates": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["startEndDates", "endDate"],
-                    "properties": {
-                      "startEndDates": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "startDate",
-                            "endDate"
-                          ],
-                          "properties": {
-                            "startDate": {
-                              "type": "string(YYYY-MM-DD)",
-                              "format": "date"
-                            },
-                            "endDate": {
-                              "type": "string(YYYY-MM-DD)",
-                              "format": "date"
-                            }
-                          }
-                        }
-                      },
-                      "endDate": {
-                        "type": "string(YYYY-MM-DD)",
-                        "format": "date"
-                      },
-                      "compounding": {
-                        "type": ["string", "null"],
-                        "default": "Continuous",
-                        "enum": [
-                          "Continuous",
-                          "Compounded",
-                          "CompoundedThenSimple" ,
-                          "Simple" ,
-                          "SimpleThenCompounded"
-                        ]
-                      },
-                      "frequency": {
-                        "type": ["string", "null"],
-                        "default": "Annual",
-                        "enum": [
-                          "NoFrequency",
-                          "Once",
-                          "Annual",
-                          "Semiannual",
-                          "EveryFourthMonth",
-                          "Quarterly",
-                          "Bimonthly",
-                          "Monthly",
-                          "EveryFourthWeek",
-                          "Biweekly",
-                          "Weekly",
-                          "Daily",
-                          "OtherFrequency"
-                        ],
-                        "description": "Schedule payment frequency"
-                      }
-                    }
-                  },
-                  "discountRates": {
-                    "type": "array",
-                    "items": {
-                      "type": "string(YYYY-MM-DD)",
-                      "format": "date"
-                    }
-                  },
-                  "yieldCurve": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": [
-                      "settlementDays",
-                      "intpMethod",
-                      "currency",
-                      "calendar",
-                      "dayCounter",
-                      "instruments"
-                    ],
-                    "properties": {
-                      "settlementDays": {
-                        "type": "Integer",
-                        "description": "Curve settlement days"
-                      },
-                      "intpMethod": {
-                        "type": "string(intpMethod)",
-                        "enum": [
-                          "Linear",
-                          "LogLinear",
-                          "Cubic",
-                          "LogCubic"
-                        ]
-                      },
-                      "currency": {
-                        "type": "string(currency)",
-                        "description": "3 letter ISO currency code"
-                      },
-                      "calendar": {
-                        "type": "string(calendar)",
-                        "description": "Schedule calendar",
-                        "enum": [
-                          "TARGET" ,"Turkey",
-                          "UnitedStates",
-                          "UnitedKingdom",
-                          "Israel",
-                          "Poland" ,"Slovakia" ,
-                          "Romania", "Indonesia" ,"SouthAfrica", "Germany", "CzechRepublic" ,
-                          "SouthKorea" ,"BespokeCalendar" ,"Japan" ,"Singapore","Switzerland", "Taiwan",
-                          "China", "Brazil" ,"Italy" ,"Finland" ,"Botswana" ,"Mexico", "Ukraine",
-                          "India", "HongKong" ,"Sweden" ,"Iceland", "SaudiArabia", "NewZealand", "Denmark" ,"Argentina",
-                          "NullCalendar", "Russia", "Thailand", "WeekendsOnly", "France" ,"Norway"
-                        ]
-                      },
-                      "dayCounter": {
-                        "type": "string(dayCounter)",
-                        "enum": [
-                          "Actual360",
-                          "Actual365Fixed",
-                          "ActualActual",
-                          "Business252",
-                          "OneDayCounter",
-                          "SimpleDayCounter",
-                          "Thirty360",
-                          "Actual365",
-                          "ActualActualİSMA",
-                          "ActualActualİSDA",
-                          "ActualActualAFB",
-                          "ActualActualEURO"
-                        ],
-                        "description": "Accrual day counter"
-                      },
-                      "period": {
-                        "type": "string(period)",
-                        "description": "Schedule payment period"
-                      },
-                      "instruments": {
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                          "DEPO": {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": [
-                              "businessDayConvention",
-                              "dayCounter"
-                            ],
-                            "properties": {
-                              "businessDayConvention": {
-                                "type": "string(businessDayConvention)",
-                                "enum": [
-                                  "Following",
-                                  "ModifiedFollowing",
-                                  "Preceding",
-                                  "ModifiedPreceding",
-                                  "Unadjusted",
-                                  "HalfMonthModifiedFollowing",
-                                  "Nearest"
-                                ]
-                              },
-                              "dayCounter": {
-                                "type": "string(dayCounter)",
-                                "enum": [
-                                  "Actual360",
-                                  "Actual365Fixed",
-                                  "ActualActual",
-                                  "Business252",
-                                  "OneDayCounter",
-                                  "SimpleDayCounter",
-                                  "Thirty360",
-                                  "Actual365",
-                                  "ActualActualİSMA",
-                                  "ActualActualİSDA",
-                                  "ActualActualAFB",
-                                  "ActualActualEURO"
-                                ],
-                                "description": "Accrual day counter"
-                              }
-                            }
-                    },
-                          "FUTURES": {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": [
-                              "businessDayConvention",
-                              "dayCounter",
-                              "market",
-                              "usedates"
-                            ],
-                            "properties": {
-                              "businessDayConvention": {
-                                "type": "string(businessDayConvention)",
-                                "enum": [
-                                  "Following",
-                                  "ModifiedFollowing",
-                                  "Preceding",
-                                  "ModifiedPreceding",
-                                  "Unadjusted",
-                                  "HalfMonthModifiedFollowing",
-                                  "Nearest"
-                                ]
-                              },
-                              "dayCounter": {
-                                "type": "string(dayCounter)",
-                                "enum": [
-                                  "Actual360",
-                                  "Actual365Fixed",
-                                  "ActualActual",
-                                  "Business252",
-                                  "OneDayCounter",
-                                  "SimpleDayCounter",
-                                  "Thirty360",
-                                  "Actual365",
-                                  "ActualActualİSMA",
-                                  "ActualActualİSDA",
-                                  "ActualActualAFB",
-                                  "ActualActualEURO"
-                                ],
-                                "description": "Accrual day counter"
-                              },
-                              "market":  {
-                                "type": "string"
-                              },
-                              "usedates": {
-                                "type": "boolean"
-                              }
-                            }
-                          },
-                          "IRS": {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "required": [
-                              "businessDayConvention",
-                              "dayCounter",
-                              "frequency"
-                            ],
-                            "properties": {
-                              "businessDayConvention": {
-                                "type": "string(businessDayConvention)",
-                                "enum": [
-                                  "Following",
-                                  "ModifiedFollowing",
-                                  "Preceding",
-                                  "ModifiedPreceding",
-                                  "Unadjusted",
-                                  "HalfMonthModifiedFollowing",
-                                  "Nearest"
-                                ]
-                              },
-                              "dayCounter": {
-                                "type": "string(dayCounter)",
-                                "enum": [
-                                  "Actual360",
-                                  "Actual365Fixed",
-                                  "ActualActual",
-                                  "Business252",
-                                  "OneDayCounter",
-                                  "SimpleDayCounter",
-                                  "Thirty360",
-                                  "Actual365",
-                                  "ActualActualİSMA",
-                                  "ActualActualİSDA",
-                                  "ActualActualAFB",
-                                  "ActualActualEURO"
-                                ],
-                                "description": "Accrual day counter"
-                              },
-                              "frequency": {
-                                "type": "string",
-                                "enum": [
-                                  "NoFrequency",
-                                  "Once",
-                                  "Annual",
-                                  "Semiannual",
-                                  "EveryFourthMonth",
-                                  "Quarterly",
-                                  "Bimonthly",
-                                  "Monthly",
-                                  "EveryFourthWeek",
-                                  "Biweekly",
-                                  "Weekly",
-                                  "Daily",
-                                  "OtherFrequency"
-                                ],
-                                "description": "Schedule payment frequency."
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "applyShock": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [
-                            "tenor",
-                            "shockValue"
-                          ],
-                          "properties": {
-                            "tenor": {
-                              "type": "string"
-                            },
-                            "shockValue": {
-                              "type": "double"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "yieldData": {
-                    "type": "array(Array of objects(YieldData))",
-                    "items": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "valuationDate",
-                        "currency",
-                        "instrument",
-                        "tenor",
-                        "value"
-                      ],
-                      "properties": {
-                        "valuationDate": {
-                          "type": "string(YYYY-MM-DD)",
-                          "format": "date",
-                          "description": "Target valuation date"
-                        },
-                        "maturityDate": {
-                          "type": "string(YYYY-MM-DD)",
-                          "format": "date",
-                          "description": "Target maturity date"
-                        },
-                        "currency": {
-                          "type": "string(currency)",
-                          "description": "3 letter ISO currency code"
-                        },
-                        "instrument": {
-                          "type": "string",
-                          "description": "Type of yield instrument"
-                        },
-                        "tenor": {
-                          "type": "string(period)",
-                          "description": "Schedule payment period"
-                        },
-                        "value": {
-                          "type": "number",
-                          "description": "Yield value"
-                        },
-                        "period": {
-                          "type": "string(period)",
-                          "description": "Schedule payment period"
-                        },
-                        "settlementDate": {
-                          "type": "string",
-                          "description": "Settlement date of data as period"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "taskId": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/data-sources": {
-      "post": {
-        "summary": "Load Method",
-        "description": "RPEngineClient.core.load({calculationName: 'calculation-name',data: {calculation parameters} })",
-        "operationId": "loadMethodNode",
-        "tags": [
-          "nodeClient"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "name",
-                  "type",
-                  "file"
-                ],
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Name of the data source to create",
-                    "readOnly": true
-                  },
-                  "type": {
-                    "type": "integer",
-                    "enum": [
-                      "\nyieldCurve: 0 \n",
-                      "yieldData: 1 \n",
-                      "fixedRateBondDefinition: 2\n",
-                      "vanillaOptionDefinition: 3\n",
-                      "pricesForVolMarketData: 4\n",
-                      "floatingBondDefinition: 5\n",
-                      "deposits: 6\n",
-                      "zciisData: 7\n",
-                      "futureFixingDays: 8\n",
-                      "fixData: 9"
-                    ]
-                  },
-                  "file": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "Data source parameters should be added"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "object",
-                      "readOnly": true,
-                      "description": "Your data source parameters"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tasks/{taskID}": {
-      "get": {
-        "summary": "Get Calculation Result",
-        "operationId": "getResultMethodNode",
-        "description": "RPEngineClient.core.getResult({taskID: 'Your_Calculation_Identifier'})",
-        "tags": [
-          "nodeClient"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "taskID"
-                ],
-                "type": "object",
-                "properties": {
-                  "taskID": {
-                    "type": "string",
-                    "description": "Your calculation identifier",
-                    "readOnly": true
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Get Calculation Result",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pid": {
-                      "type": "string",
-                      "description": "Your calculation identifier"
-                    },
-                    "request_time": {
-                      "type": "string(dateTime)",
-                      "description": "When the calculation was created"
-                    },
-                    "result": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "data": {
-                          "type": "Array of objects",
-                          "additionalProperties": false,
-                          "properties": {
-                            "effectiveness": {
-                              "type": "number"
-                            },
-                            "presentValue": {
-                              "type": "number"
-                            },
-                            "zeroRate": {
-                              "type": "number"
-                            },
-                            "discountFactor": {
-                              "type": "number"
-                            },
-                            "realizedCF": {
-                              "type": "number"
-                            },
-                            "termToMatByDay": {
-                              "type": "number"
-                            },
-                            "termToMatByYear": {
-                              "type": "number"
-                            },
-                            "accrued": {
-                              "type": "number"
-                            },
-                            "beginDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "totalPresentValue": {
-                          "type": "number"
-                        },
-                        "totalAccrued": {
-                          "type": "number"
-                        },
-                        "totalEffectiveness": {
-                          "type": "number"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tasks/{calculation-Name}": {
-      "post": {
-        "summary": "Calculate Method",
-        "description": "RPEngineClient.core.calculate({calculationName: 'calculation-name',data: {calculation parameters} })",
-        "operationId": "calculateMethodPython",
-        "tags": [
-          "pythonClient"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "calculationName",
-                  "data"
-                ],
-                "type": "object",
-                "properties": {
-                  "calculationName": {
-                    "type": "string",
-                    "description": "Name of the calculation to create.Multi-word nouns are separated by hyphens (-). For example: 'fixed-rate-bond'",
-                    "readOnly": true
-                  },
-                  "data": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "Calculation parameters should be added"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "taskId": {
-                      "type": "string",
-                      "readOnly": true,
-                      "description": "Your calculation identifier"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/dataSources": {
-      "post": {
-        "summary": "Load Method",
-        "description": "RPEngineClient.core.load({calculationName: 'calculation-name',data: {calculation parameters} })",
-        "operationId": "loadMethod",
-        "tags": [
-          "pythonClient"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "name",
-                  "type",
-                  "file"
-                ],
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Name of the data source to create",
-                    "readOnly": true
-                  },
-                  "type": {
-                    "type": "integer",
-                    "enum": [
-                      "\nyieldCurve: 0 \n",
-                      "yieldData: 1 \n",
-                      "fixedRateBondDefinition: 2\n",
-                      "vanillaOptionDefinition: 3\n",
-                      "pricesForVolMarketData: 4\n",
-                      "floatingBondDefinition: 5\n",
-                      "deposits: 6\n",
-                      "zciisData: 7\n",
-                      "futureFixingDays: 8\n",
-                      "fixData: 9"
-                    ]
-                  },
-                  "file": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "description": "Data source parameters should be added"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "object",
-                      "readOnly": true,
-                      "description": "Your data source parameters"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tasks/{task_ID}": {
-      "get": {
-        "summary": "Get Calculation Result",
-        "operationId": "getResultMethodPython",
-        "description": "RPEngineClient.core.getResult({taskID: 'Your_Calculation_Identifier'})",
-        "tags": [
-          "pythonClient"
-        ],
-        "requestBody": {
-          "description": "Client object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "required": [
-                  "taskID"
-                ],
-                "type": "object",
-                "properties": {
-                  "taskID": {
-                    "type": "string",
-                    "description": "Your calculation identifier",
-                    "readOnly": true
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Get Calculation Result",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pid": {
-                      "type": "string",
-                      "description": "Your calculation identifier"
-                    },
-                    "request_time": {
-                      "type": "string(dateTime)",
-                      "description": "When the calculation was created"
-                    },
-                    "result": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "data": {
-                          "type": "Array of objects",
-                          "additionalProperties": false,
-                          "properties": {
-                            "effectiveness": {
-                              "type": "number"
-                            },
-                            "presentValue": {
-                              "type": "number"
-                            },
-                            "zeroRate": {
-                              "type": "number"
-                            },
-                            "discountFactor": {
-                              "type": "number"
-                            },
-                            "realizedCF": {
-                              "type": "number"
-                            },
-                            "termToMatByDay": {
-                              "type": "number"
-                            },
-                            "termToMatByYear": {
-                              "type": "number"
-                            },
-                            "accrued": {
-                              "type": "number"
-                            },
-                            "beginDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "totalPresentValue": {
-                          "type": "number"
-                        },
-                        "totalAccrued": {
-                          "type": "number"
-                        },
-                        "totalEffectiveness": {
-                          "type": "number"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "errors": {
-      "PlusAuthError": {
-        "type": "object",
-        "required": [
-          "status",
-          "error"
-        ],
-        "properties": {
-          "status": {
-            "type": "integer"
-          },
-          "error": {
-            "type": "string"
-          },
-          "error_description": {
-            "type": "string"
-          }
-        }
-      },
-      "UnsupportedViewTemplate": {
-        "description": "Provided view type is not supported.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "InvalidEntity": {
-        "description": "Provided view type is not supported",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "examples": {
-              "Missing Field": {
-                "value": {
-                  "status": 422,
-                  "error": "invalid_entity",
-                  "error_description": "should have required property \\'<field>\\'"
-                }
-              },
-              "Invalid Field": {
-                "value": {
-                  "status": 422,
-                  "error": "invalid_entity",
-                  "error_description": "\\'<field>\\' should NOT be longer than 255 characters"
-                }
-              }
-            }
-          }
-        }
-      },
-      "EntityNotFound": {
-        "description": "Provided entity not found.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "entity_not_found",
-                "error_description": "\\\"<resource>\\\" with provided \\\"<field>\\\" not found",
-                "status": 404
-              }
-            }
-          }
-        }
-      },
-      "UnauthorizedAction": {
-        "anyOf": [
-          {
-            "description": "Invalid audience is used",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "error_description": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "value": {
-                    "error": "unauthorized_action",
-                    "error_description": "Incorrect audience \"<audience>\" Expected: \"<audience>\"",
-                    "status": 403
-                  }
-                }
-              }
-            }
-          },
-          {
-            "description": "Invalid Issuer is used",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "error_description": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "value": {
-                    "error": "unauthorized_action",
-                    "error_description": "Invalid issuer \"<issuer>\"",
-                    "status": 403
-                  }
-                }
-              }
-            }
-          },
-          {
-            "description": "Required scope is missing",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "error_description": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "value": {
-                    "error": "unauthorized_action",
-                    "error_description": "\\\"<scope>\\\" is required to access this endpoint",
-                    "status": 403
-                  }
-                }
-              }
-            }
-          },
-          {
-            "description": "User is unauthorized for the tenant",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "error_description": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "value": {
-                    "error": "unauthorized_action",
-                    "error_description": "User is unauthorized for this tenant",
-                    "status": 403
-                  }
-                }
-              }
-            }
-          }
-        ]
-      },
-      "InvalidAudience": {
-        "description": "Invalid audience is used",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "unauthorized_action",
-                "error_description": "Incorrect audience \"<audience>\" Expected: \"<audience>\"",
-                "status": 403
-              }
-            }
-          }
-        }
-      },
-      "InvalidIssuer": {
-        "description": "Invalid Issuer is used",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "unauthorized_action",
-                "error_description": "Invalid issuer \"<issuer>\"",
-                "status": 403
-              }
-            }
-          }
-        }
-      },
-      "MissingScope": {
-        "description": "Required scope is missing",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "unauthorized_action",
-                "error_description": "\\\"<scope>\\\" is required to access this endpoint",
-                "status": 403
-              }
-            }
-          }
-        }
-      },
-      "UnauthorizedUser": {
-        "description": "User is unauthorized for the tenant",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "unauthorized_action",
-                "error_description": "User is unauthorized for this tenant",
-                "status": 403
-              }
-            }
-          }
-        }
-      },
-      "Unauthorized": {
-        "anyOf": [
-          {
-            "description": "Invalid authorization scheme",
-            "context": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "error_description": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "value": {
-                    "error": "unauthorized_request",
-                    "error_description": "Authentication scheme must be Bearer",
-                    "status": 401
-                  }
-                }
-              }
-            }
-          },
-          {
-            "description": "Authorization token is missing",
-            "context": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "error"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer"
-                    },
-                    "error": {
-                      "type": "string"
-                    },
-                    "error_description": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "example": {
-                  "value": {
-                    "error": "unauthorized_request",
-                    "error_description": "Missing authorization header",
-                    "status": 401
-                  }
-                }
-              }
-            }
-          }
-        ]
-      },
-      "InvalidAuthorizationScheme": {
-        "description": "Invalid authorization scheme",
-        "context": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "unauthorized_request",
-                "error_description": "Authentication scheme must be Bearer",
-                "status": 401
-              }
-            }
-          }
-        }
-      },
-      "MissingToken": {
-        "description": "Authorization token is missing",
-        "context": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "error": "unauthorized_request",
-                "error_description": "Missing authorization header",
-                "status": 401
-              }
-            }
-          }
-        }
-      },
-      "AlreadyExists": {
-        "description": "Unique Violation Error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "status": 409,
-                "error": "already_exists",
-                "error_description": "\\\"<resource>\\\" with provided \\\"<field>\\\" already exists."
-              }
-            }
-          }
-        }
-      },
-      "InvalidField": {
-        "description": "Invalid field used in query",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "value": {
-                "status": 400,
-                "error": "invalid_field",
-                "error_description": "field \\\"<field>\\\" does not exist"
-              }
-            }
-          }
-        }
-      },
-      "PayloadTooLarge": {
-        "description": "Provided body is too large.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "required": [
-                "status",
-                "error"
-              ],
-              "properties": {
-                "status": {
-                  "type": "integer"
-                },
-                "error": {
-                  "type": "string"
-                },
-                "error_description": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "Api": {
-      "Name": {
-        "type": "string",
-        "description": "Display name for the API.",
-        "minLength": 1,
-        "maxLength": 255
-      },
-      "Description": {
-        "description": "Additional identifier to be stored with API.",
-        "type": "string",
-        "nullable": true,
-        "maxLength": 255
-      },
-      "Audience": {
-        "description": "Unique identifier for the API. Cannot be changed after set.",
-        "type": "string",
-        "maxLength": 255
-      }
-    }
-  },
-  "components": {
-    "parameters": {
-      "page": {
-        "name": "page",
-        "in": "query",
-        "description": "The number of records you wish to skip before selecting records",
-        "required": false,
-        "schema": {
-          "type": "integer",
-          "format": "int32"
-        }
-      },
-      "itemsPerPage": {
-        "name": "itemsPerPage",
-        "in": "query",
-        "description": "Limit the number of results returned",
-        "required": false,
-        "schema": {
-          "type": "integer",
-          "format": "int32",
-          "maximum": 1000
-        }
-      },
-      "sortBy": {
-        "name": "sortBy",
-        "in": "query",
-        "description": "Properties that should be ordered by",
-        "required": false,
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "sortDesc": {
-        "name": "sortDesc",
-        "in": "query",
-        "description": "Descending or ascending or nothing",
-        "required": false,
-        "schema": {
-          "type": "boolean"
-        }
-      },
-      "q": {
-        "name": "q",
-        "in": "query",
-        "description": "Additional query in [PlusAuth Query Language](https://docs.plusauth.com/api/core/query-syntax) format.",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      }
-    },
-    "securitySchemes": {
-      "ekxApiKey": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "ekx-api-key"
-      },
-      "ekxApiSecret": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "ekx-api-secret"
-      }
-    },
-    "schemas": {
-      "HookType": {
-        "type": "string",
-        "enum": [
-          "pre_register",
-          "post_register",
-          "pre_login",
-          "post_login",
-          "pre_mfa",
-          "pre_access_token",
-          "pre_id_token",
-          "pre_fc_import",
-          "pre_fc_export"
-        ]
-      }
-    }
-  },
-  "servers": [
-    {
-      "url": "{apiUrl}/api",
-      "variables": {
-        "apiUrl": {
-          "default": "https://app.rhoova.com",
-          "enum": [
-            "https://app.rhoova.com"
-          ]
-        }
-      }
-    }
-  ],
-  "tags": [ ],
-  "security": [
-    {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-API-Key"
-      },
+openapi: 3.0.2
+info:
+  title: Rhoova API Documentation
+  version: 1.0.1
+paths:
+  /tasks/yield-curve-calculation:
+    post:
+      summary: Create Yield Curve Calculation
+      security:
+        - BearerAuth:
+            - read:client
+      tags:
+        - calculations
+      requestBody:
+        description: Client object
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - valuationDate
+                - endOfMonth
+                - yieldCurve
+                - yieldData
+                - zeroRates
+                - forwardRates
+                - discountRates
+              type: object
+              properties:
+                valuationDate:
+                  type: string
+                  format: date
+                  description: Target valuation date((YYYY-MM-DD)).
+                endOfMonth:
+                  type: boolean
+                  description: Adjust to end of month rule applied to the schedule
+                zeroRates:
+                  type: object
+                  additionalProperties: false
+                  required: []
+                  properties:
+                    analysisDates:
+                      type:
+                        - array
+                        - 'null'
+                      items:
+                        type: string
+                        format: date
+                    compounding:
+                      type:
+                        - string
+                        - 'null'
+                      enum:
+                        - Continuous
+                        - Compounded
+                        - CompoundedThenSimple
+                        - Simple
+                        - SimpleThenCompounded
+                      default: Continuous
+                    frequency:
+                      type:
+                        - string
+                        - 'null'
+                      default: Annual
+                      enum:
+                        - NoFrequency
+                        - Once
+                        - Annual
+                        - Semiannual
+                        - EveryFourthMonth
+                        - Quarterly
+                        - Bimonthly
+                        - Monthly
+                        - EveryFourthWeek
+                        - Biweekly
+                        - Weekly
+                        - Daily
+                        - OtherFrequency
+                      description: Schedule payment frequency.
+                forwardRates:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - startEndDates
+                    - endDate
+                  properties:
+                    startEndDates:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - startDate
+                          - endDate
+                        properties:
+                          startDate:
+                            type: string
+                            format: date
+                            description: (YYYY-MM-DD)
+                          endDate:
+                            type: string
+                            format: date
+                            description: (YYYY-MM-DD)
+                    endDate:
+                      type: string
+                      format: date
+                      description: (YYYY-MM-DD)
+                    compounding:
+                      type:
+                        - string
+                        - 'null'
+                      default: Continuous
+                      enum:
+                        - Continuous
+                        - Compounded
+                        - CompoundedThenSimple
+                        - Simple
+                        - SimpleThenCompounded
+                    frequency:
+                      type:
+                        - string
+                        - 'null'
+                      default: Annual
+                      enum:
+                        - NoFrequency
+                        - Once
+                        - Annual
+                        - Semiannual
+                        - EveryFourthMonth
+                        - Quarterly
+                        - Bimonthly
+                        - Monthly
+                        - EveryFourthWeek
+                        - Biweekly
+                        - Weekly
+                        - Daily
+                        - OtherFrequency
+                      description: Schedule payment frequency
+                discountRates:
+                  type: array
+                  items:
+                    type: string(YYYY-MM-DD)
+                    format: date
+                yieldCurve:
+                  type: object
+                  additionalProperties: false
+                  required:
+                    - settlementDays
+                    - intpMethod
+                    - currency
+                    - calendar
+                    - dayCounter
+                    - instruments
+                  properties:
+                    settlementDays:
+                      type: Integer
+                      description: Curve settlement days
+                    intpMethod:
+                      type: string
+                      enum:
+                        - Linear
+                        - LogLinear
+                        - Cubic
+                        - LogCubic
+                    currency:
+                      type: string
+                      description: 3 letter ISO currency code
+                    calendar:
+                      type: string
+                      description: Schedule calendar
+                      enum:
+                        - TARGET
+                        - Turkey
+                        - UnitedStates
+                        - UnitedKingdom
+                        - Israel
+                        - Poland
+                        - Slovakia
+                        - Romania
+                        - Indonesia
+                        - SouthAfrica
+                        - Germany
+                        - CzechRepublic
+                        - SouthKorea
+                        - BespokeCalendar
+                        - Japan
+                        - Singapore
+                        - Switzerland
+                        - Taiwan
+                        - China
+                        - Brazil
+                        - Italy
+                        - Finland
+                        - Botswana
+                        - Mexico
+                        - Ukraine
+                        - India
+                        - HongKong
+                        - Sweden
+                        - Iceland
+                        - SaudiArabia
+                        - NewZealand
+                        - Denmark
+                        - Argentina
+                        - NullCalendar
+                        - Russia
+                        - Thailand
+                        - WeekendsOnly
+                        - France
+                        - Norway
+                    dayCounter:
+                      type: string
+                      enum:
+                        - Actual360
+                        - Actual365Fixed
+                        - ActualActual
+                        - Business252
+                        - OneDayCounter
+                        - SimpleDayCounter
+                        - Thirty360
+                        - Actual365
+                        - ActualActualİSMA
+                        - ActualActualİSDA
+                        - ActualActualAFB
+                        - ActualActualEURO
+                      description: Accrual day counter
+                    period:
+                      type: string
+                      description: Schedule payment period
+                    instruments:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        DEPO:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - businessDayConvention
+                            - dayCounter
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                                - Actual360
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                              description: Accrual day counter
+                        FUTURES:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - businessDayConvention
+                            - dayCounter
+                            - market
+                            - usedates
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                                - Actual360
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                              description: Accrual day counter
+                            market:
+                              type: string
+                            usedates:
+                              type: boolean
+                        IRS:
+                          type: object
+                          additionalProperties: false
+                          required:
+                            - businessDayConvention
+                            - dayCounter
+                            - frequency
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                                - Actual360
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                              description: Accrual day counter
+                            frequency:
+                              type: string
+                              enum:
+                                - NoFrequency
+                                - Once
+                                - Annual
+                                - Semiannual
+                                - EveryFourthMonth
+                                - Quarterly
+                                - Bimonthly
+                                - Monthly
+                                - EveryFourthWeek
+                                - Biweekly
+                                - Weekly
+                                - Daily
+                                - OtherFrequency
+                              description: Schedule payment frequency.
+                    applyShock:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: false
+                        required:
+                          - tenor
+                          - shockValue
+                        properties:
+                          tenor:
+                            type: string
+                          shockValue:
+                            type: double
+                yieldData:
+                  type: array(Array of objects(YieldData))
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                      - valuationDate
+                      - currency
+                      - instrument
+                      - tenor
+                      - value
+                    properties:
+                      valuationDate:
+                        type: string
+                        format: date
+                        description: Target valuation date(YYYY-MM-DD)
+                      maturityDate:
+                        type: string
+                        format: date
+                        description: Target maturity date(YYYY-MM-DD)
+                      currency:
+                        type: string
+                        description: 3 letter ISO currency code
+                      instrument:
+                        type: string
+                        description: Type of yield instrument
+                      tenor:
+                        type: string
+                        description: Schedule payment period
+                      value:
+                        type: number
+                        description: Yield value
+                      period:
+                        type: string
+                        description: Schedule payment period
+                      settlementDate:
+                        type: string
+                        description: Settlement date of data as period
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskId:
+                    type: string
 
-
-      "secretKey": [ ]
-    },
-    {
-      "apiKey": [ ]
-    }
-  ]
-}
