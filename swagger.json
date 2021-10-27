@@ -368,7 +368,7 @@ paths:
                           shockValue:
                             type: double
                 yieldData:
-                  type: array(Array of objects(YieldData))
+                  type: array
                   items:
                     type: object
                     additionalProperties: false
