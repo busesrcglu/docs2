@@ -10,7 +10,7 @@ paths:
         - BearerAuth:
             - read:client
       tags:
-        - calculations
+        - Yield Curve Calculation
       requestBody:
         description: Client object
         required: true
