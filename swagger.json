@@ -27,7 +27,7 @@ paths:
                 valuationDate:
                   type: string
                   format: date
-                  description: date format (YYYY-MM-DD)
+                  pattern: "YYYY-MM-DD"
                 endOfMonth:
                   type: boolean
                 zeroRates:
@@ -42,7 +42,6 @@ paths:
                       items:
                         type: string
                         format: date
-                        description: date format (YYYY-MM-DD)
                     compounding:
                       type:
                         - string
