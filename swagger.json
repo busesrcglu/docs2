@@ -91,15 +91,15 @@ paths:
                           startDate:
                             type: string
                             format: date
-                            description: date format (YYYY-MM-DD)
+                            pattern: "YYYY-MM-DD"
                           endDate:
                             type: string
                             format: date
-                            description: date format (YYYY-MM-DD)
+                             pattern: "YYYY-MM-DD"
                     endDate:
                       type: string
                       format: date
-                      description: date format (YYYY-MM-DD)
+                      pattern: "YYYY-MM-DD"
                     compounding:
                       type:
                         - string
@@ -135,7 +135,7 @@ paths:
                   items:
                     type: string
                     format: date
-                    description: date format (YYYY-MM-DD)
+                    pattern: "YYYY-MM-DD"
                 yieldCurve:
                   type: object
                   additionalProperties: false
@@ -380,7 +380,7 @@ paths:
                       valuationDate:
                         type: string
                         format: date
-                        description: date format(YYYY-MM-DD)
+                        pattern: "YYYY-MM-DD"
                       maturityDate:
                         type: string
                         oneOf:
