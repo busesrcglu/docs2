@@ -95,7 +95,7 @@ paths:
                           endDate:
                             type: string
                             format: date
-                             pattern: "YYYY-MM-DD"
+                            pattern: "YYYY-MM-DD"
                     endDate:
                       type: string
                       format: date
