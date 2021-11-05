@@ -43,7 +43,7 @@ paths:
                       items:
                         type: string
                         format: date
-                        date format (YYYY-MM-DD)
+                        description: date format (YYYY-MM-DD)
                     compounding:
                       type:
                         - string
