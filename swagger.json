@@ -35,16 +35,13 @@ paths:
                   additionalProperties: false
                   properties:
                     analysisDates:
-                      type:
-                        - array
-                        - 'null'
+                      type: array
                       items:
                         type: string
                         format: date
+                        pattern: "YYYY-MM-DD"
                     compounding:
-                      type:
-                        - string
-                        - 'null'
+                      type: string
                       enum:
                         - Continuous
                         - Compounded
@@ -53,9 +50,7 @@ paths:
                         - SimpleThenCompounded
                       default: Continuous
                     frequency:
-                      type:
-                        - string
-                        - 'null'
+                      type: string
                       default: Annual
                       enum:
                         - NoFrequency
@@ -100,9 +95,7 @@ paths:
                       format: date
                       pattern: "YYYY-MM-DD"
                     compounding:
-                      type:
-                        - string
-                        - 'null'
+                      type: string
                       default: Continuous
                       enum:
                         - Continuous
@@ -111,9 +104,7 @@ paths:
                         - Simple
                         - SimpleThenCompounded
                     frequency:
-                      type:
-                        - string
-                        - 'null'
+                      type: string 
                       default: Annual
                       enum:
                         - NoFrequency
