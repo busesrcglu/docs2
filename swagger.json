@@ -22,15 +22,12 @@ paths:
                 - endOfMonth
                 - yieldCurve
                 - yieldData
-                - zeroRates
-                - forwardRates
-                - discountRates
               type: object
               properties:
                 valuationDate:
                   type: string
                   format: date
-                  description: Target valuation date((YYYY-MM-DD)).
+                  description: Target valuation date((YYYY-MM-DD))
                 endOfMonth:
                   type: boolean
                   description: Adjust to end of month rule applied to the schedule
@@ -76,7 +73,7 @@ paths:
                         - Weekly
                         - Daily
                         - OtherFrequency
-                      description: Schedule payment frequency.
+                      description: Schedule payment frequency
                 forwardRates:
                   type: object
                   additionalProperties: false
@@ -148,8 +145,7 @@ paths:
                     - settlementDays
                     - intpMethod
                     - currency
-                    - calendar
-                    - dayCounter
+                    - period
                     - instruments
                   properties:
                     settlementDays:
@@ -301,6 +297,9 @@ paths:
                               description: Accrual day counter
                             market:
                               type: string
+                              enum:
+                                -IMM
+                                -ASX
                             usedates:
                               type: boolean
                         IRS:
@@ -353,7 +352,7 @@ paths:
                                 - Weekly
                                 - Daily
                                 - OtherFrequency
-                              description: Schedule payment frequency.
+                              description: Schedule payment frequency
                     applyShock:
                       type: array
                       items:
@@ -369,6 +368,15 @@ paths:
                             type: double
                 yieldData:
                   type: array
+                  required
+                    - valuationDate
+                    - maturityDate
+                    - currency
+                    - instrument
+                    - tenor
+                    - value
+                    - period
+                    - settlementDate
                   items:
                     type: object
                     additionalProperties: false
@@ -385,8 +393,10 @@ paths:
                         description: Target valuation date(YYYY-MM-DD)
                       maturityDate:
                         type: string
-                        format: date
-                        description: Target maturity date(YYYY-MM-DD)
+                        oneOf:
+                          - maxLength: 0
+                          - format: date
+                            minLength: 1
                       currency:
                         type: string
                         description: 3 letter ISO currency code
