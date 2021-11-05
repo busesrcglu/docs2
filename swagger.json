@@ -33,7 +33,6 @@ paths:
                 zeroRates:
                   type: object
                   additionalProperties: false
-                  required: []
                   properties:
                     analysisDates:
                       type:
@@ -355,7 +354,8 @@ paths:
                           tenor:
                             type: string
                           shockValue:
-                            type: double
+                            type: number
+                            format: double
                 yieldData:
                   type: array
                   required:
@@ -385,6 +385,7 @@ paths:
                         type: string
                         oneOf:
                           - maxLength: 0
+                          - type: string
                           - format: date
                             minLength: 1
                       currency:
