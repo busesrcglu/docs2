@@ -149,7 +149,7 @@ paths:
                     - instruments
                   properties:
                     settlementDays:
-                      type: Integer
+                      type: integer
                       description: Curve settlement days
                     intpMethod:
                       type: string
@@ -298,8 +298,8 @@ paths:
                             market:
                               type: string
                               enum:
-                                -IMM
-                                -ASX
+                                - IMM
+                                - ASX
                             usedates:
                               type: boolean
                         IRS:
@@ -368,7 +368,7 @@ paths:
                             type: double
                 yieldData:
                   type: array
-                  required
+                  required:
                     - valuationDate
                     - maturityDate
                     - currency
@@ -425,4 +425,3 @@ paths:
                 properties:
                   taskId:
                     type: string
-
