@@ -512,17 +512,17 @@ paths:
                             format: double
                 yieldData:
                   type: array
-                  required:
-                  - valuationDate
-                  - maturityDate
-                  - currency
-                  - instrument
-                  - tenor
-                  - value
-                  - period
-                  - settlementDate
                   items:
                     type: object
+                    required:
+                      - valuationDate
+                      - maturityDate
+                      - currency
+                      - instrument
+                      - tenor
+                      - value
+                      - period
+                      - settlementDate
                     additionalProperties: false
                     properties:
                       valuationDate:
