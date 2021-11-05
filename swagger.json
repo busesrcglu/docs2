@@ -30,7 +30,6 @@ paths:
                   description: date format (YYYY-MM-DD)
                 endOfMonth:
                   type: boolean
-                  description: Adjust to end of month rule applied to the schedule
                 zeroRates:
                   type: object
                   additionalProperties: false
@@ -74,7 +73,6 @@ paths:
                         - Weekly
                         - Daily
                         - OtherFrequency
-                      description: Schedule payment frequency
                 forwardRates:
                   type: object
                   additionalProperties: false
@@ -138,8 +136,7 @@ paths:
                   items:
                     type: string
                     format: date
-                    description:date format (YYYY-MM-DD)
-
+                    description: date format (YYYY-MM-DD)
                 yieldCurve:
                   type: object
                   additionalProperties: false
