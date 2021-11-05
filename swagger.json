@@ -122,10 +122,10 @@ paths:
                       - OtherFrequency
                 discountRates:
                   type: array
+                  pattern: YYYY-MM-DD
                   items:
                     type: string
                     format: date
-                    pattern: YYYY-MM-DD
                 yieldCurve:
                   type: object
                   additionalProperties: false
