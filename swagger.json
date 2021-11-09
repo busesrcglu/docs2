@@ -373,6 +373,7 @@ paths:
                     instruments:
                       type: object
                       additionalProperties: false
+                      description: Must contain at least one of the fields DEPO,FUTURES,IRS,FRA,OIS,Bond,FWD,BSSWAP,CCBS,CDS,ZCISwap,YoYSwap
                       properties:
                         DEPO:
                           type: object
