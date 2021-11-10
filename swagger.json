@@ -71,7 +71,6 @@ paths:
                   additionalProperties: false
                   required:
                   - startEndDates
-                  - endDate
                   properties:
                     startEndDates:
                       type: array
@@ -90,10 +89,6 @@ paths:
                             type: string
                             format: date
                             pattern: YYYY-MM-DD
-                    endDate:
-                      type: string
-                      format: date
-                      pattern: YYYY-MM-DD
                     compounding:
                       type: string
                       default: Continuous
