@@ -1065,8 +1065,8 @@ paths:
                       transform:
                       - toEnumCase
                       enum:
-                      - pay
-                      - receive
+                      - Pay
+                      - Receive
                     coupon:
                       type: number
                       format: float
