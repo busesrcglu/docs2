@@ -726,7 +726,7 @@ paths:
       - BearerAuth:
         - read:client
       tags:
-      - calculations
+      - Interest Rates Swap 
       requestBody:
         description: Client object
         required: true
