@@ -1076,7 +1076,6 @@ paths:
                   type: object
                   required:
                   - frequency
-                  - index
                   - dayCounter
                   - calendar
                   - businessDayConvention
@@ -1103,7 +1102,9 @@ paths:
                       - Daily
                       - OtherFrequency
                     index:
-                      type: string
+                      type: 
+                        - string
+                        - 'null'
                       enum:
                       - TRLibor6M
                       - TRLibor1Y
@@ -1243,6 +1244,7 @@ paths:
                   - intpMethod
                   - currency
                   - calendar
+                  - period
                   - dayCounter
                   - instruments
                   properties:
@@ -1618,6 +1620,7 @@ paths:
                   - intpMethod
                   - currency
                   - calendar
+                  - period
                   - dayCounter
                   - instruments
                   properties:
