@@ -1085,6 +1085,7 @@ paths:
                   properties:
                     spread:
                       type: number
+                      default: 0
                     frequency:
                       type: string
                       enum:
