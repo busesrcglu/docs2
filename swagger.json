@@ -19,7 +19,6 @@ paths:
             schema:
               required:
               - valuationDate
-              - endOfMonth
               - yieldCurve
               - yieldData
               type: object
@@ -28,8 +27,6 @@ paths:
                   type: string
                   format: date
                   pattern: YYYY-MM-DD
-                endOfMonth:
-                  type: boolean
                 zeroRates:
                   type: object
                   additionalProperties: false
@@ -365,6 +362,9 @@ paths:
                       - ActualActualEURO
                     period:
                       type: string
+                    endOfMonth:
+                      type: boolean
+                      default: true
                     instruments:
                       type: object
                       additionalProperties: false
