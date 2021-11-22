@@ -113,11 +113,17 @@ paths:
                       - Daily
                       - OtherFrequency
                 discountRates:
-                  type: array
-                  pattern: YYYY-MM-DD
-                  items:
-                    type: string
-                    format: date
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - analysisDates
+                  properties:
+                    analysisDates:
+                      type: array
+                      pattern: YYYY-MM-DD
+                      items:
+                        type: string
+                        format: date
                 yieldCurve:
                   type: object
                   additionalProperties: false
@@ -125,7 +131,6 @@ paths:
                   - settlementDays
                   - intpMethod
                   - currency
-                  - period
                   - instruments
                   properties:
                     settlementDays:
