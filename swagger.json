@@ -2241,6 +2241,951 @@ paths:
                 properties:
                   taskId:
                     type: string
+/tasks/fixed-rate-bond:
+    post:
+      summary: Create Fixed Rate Bond Calculation
+      security:
+        - BearerAuth:
+            - read:client
+      tags:
+        - calculations
+      requestBody:
+        description: Client object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - notional
+                - valuationDate
+                - settlementDate
+                - buySell
+                - fixedRateBondDefinition
+                - discountCurve
+              properties:
+                notional:
+                  type: number
+                valuationDate:
+                  type: string
+                  format: date
+                settlementDate:
+                  type: string
+                  format: date
+                  formatMinimum:
+                    $data: 1/valuationDate
+                buySell:
+                  type: string
+                  transform:
+                    - toEnumCase
+                  enum:
+                    - buy
+                    - sell
+                fixedRateBondDefinition:
+                  type: object
+                  properties:
+                    redemption:
+                      type: number
+                    period:
+                      type: string
+                      oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                    maturityDate:
+                      type: string
+                      format: date
+                    issueDate:
+                      type: string
+                      format: date
+                    businessDayConv:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - Following
+                        - ModifiedFollowing
+                        - Preceding
+                        - ModifiedPreceding
+                        - Unadjusted
+                        - HalfMonthModifiedFollowing
+                        - Nearest
+                    maturityDayConvention:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - Following
+                        - ModifiedFollowing
+                        - Preceding
+                        - ModifiedPreceding
+                        - Unadjusted
+                        - HalfMonthModifiedFollowing
+                        - Nearest
+                    dateGeneration:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - Backward
+                        - Forward
+                        - Zero
+                        - ThirdWednesday
+                        - Twentieth
+                        - TwentiethIMM
+                        - OldCDS
+                        - CDS
+                        - CDS2015
+                    calendar:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - TARGET
+                        - Turkey
+                        - UnitedStates
+                        - UnitedKingdom
+                        - Israel
+                        - Poland
+                        - Slovakia
+                        - Romania
+                        - Indonesia
+                        - SouthAfrica
+                        - Germany
+                        - CzechRepublic
+                        - SouthKorea
+                        - BespokeCalendar
+                        - Japan
+                        - Singapore
+                        - Switzerland
+                        - Taiwan
+                        - China
+                        - Brazil
+                        - Italy
+                        - Finland
+                        - Botswana
+                        - Mexico
+                        - Ukraine
+                        - India
+                        - HongKong
+                        - Sweden
+                        - Iceland
+                        - SaudiArabia
+                        - NewZealand
+                        - Denmark
+                        - Russia
+                        - Argentina
+                        - NullCalendar
+                        - Thailand
+                        - WeekendsOnly
+                        - France
+                        - Norway
+                    dayCountConvention:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - Actual360
+                        - Actual365Fixed
+                        - ActualActual
+                        - Business252
+                        - OneDayCounter
+                        - SimpleDayCounter
+                        - Thirty360
+                        - Actual365
+                        - ActualActualİSMA
+                        - ActualActualİSDA
+                        - ActualActualAFB
+                        - ActualActualEURO
+                    coupon:
+                      type: number
+                    endOfMonth:
+                      type: boolean
+                    currency:
+                      type: string
+                      enum:
+                        - EURUSD
+                        - AED
+                        - AFN
+                        - ALL
+                        - AMD
+                        - ANG
+                        - AOA
+                        - ARS
+                        - AUD
+                        - AWG
+                        - AZN
+                        - BAM
+                        - BBD
+                        - BDT
+                        - BGN
+                        - BHD
+                        - BIF
+                        - BMD
+                        - BND
+                        - BOB
+                        - BRL
+                        - BSD
+                        - BTN
+                        - BWP
+                        - BYR
+                        - BZD
+                        - CAD
+                        - CDF
+                        - CHF
+                        - CKD
+                        - CLP
+                        - CNY
+                        - COP
+                        - CRC
+                        - CUP
+                        - CVE
+                        - CZK
+                        - DJF
+                        - DKK
+                        - DOP
+                        - DZD
+                        - EGP
+                        - ERN
+                        - ETB
+                        - EUR
+                        - FJD
+                        - FKP
+                        - FOK
+                        - GBP
+                        - GEL
+                        - GGP
+                        - GHS
+                        - GIP
+                        - GMD
+                        - GNF
+                        - GTQ
+                        - GYD
+                        - HKD
+                        - HNL
+                        - HRK
+                        - HTG
+                        - HUF
+                        - IDR
+                        - ILS
+                        - IMP
+                        - INR
+                        - IQD
+                        - IRR
+                        - ISK
+                        - JEP
+                        - JMD
+                        - JOD
+                        - JPY
+                        - KES
+                        - KGS
+                        - KHR
+                        - KID
+                        - KMF
+                        - KPW
+                        - KRW
+                        - KWD
+                        - KYD
+                        - KZT
+                        - LAK
+                        - LBP
+                        - LKR
+                        - LRD
+                        - LSL
+                        - LYD
+                        - MAD
+                        - MDL
+                        - MGA
+                        - MKD
+                        - MMK
+                        - MNT
+                        - MOP
+                        - MRO
+                        - MUR
+                        - MVR
+                        - MWK
+                        - MXN
+                        - MYR
+                        - MZN
+                        - NAD
+                        - NGN
+                        - NIO
+                        - NOK
+                        - NPR
+                        - NZD
+                        - OMR
+                        - PAB
+                        - PEN
+                        - PGK
+                        - PHP
+                        - PKR
+                        - PLN
+                        - PYG
+                        - QAR
+                        - RON
+                        - RSD
+                        - RUB
+                        - RWF
+                        - SAR
+                        - SBD
+                        - SCR
+                        - SDG
+                        - SEK
+                        - SGD
+                        - SHP
+                        - SLL
+                        - SOS
+                        - SRD
+                        - SSP
+                        - STD
+                        - SYP
+                        - SZL
+                        - THB
+                        - TJS
+                        - TMT
+                        - TND
+                        - TOP
+                        - TRY
+                        - TTD
+                        - TVD
+                        - TWD
+                        - TZS
+                        - UAH
+                        - UGX
+                        - USD
+                        - UYU
+                        - UZS
+                        - VEF
+                        - VND
+                        - VUV
+                        - WST
+                        - XAF
+                        - XCD
+                        - XOF
+                        - XPF
+                        - YER
+                        - ZAR
+                        - ZMW
+                        - ZWL
+                discountCurve:
+                  required:
+                    - settlementDays
+                    - intpMethod
+                    - currency
+                    - period
+                    - ''
+                  type: object
+                  properties:
+                    settlementDays:
+                      type: number
+                    intpMethod:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - Linear
+                        - LogLinear
+                        - Cubic
+                        - LogCubic
+                    currency:
+                      type: string
+                      enum:
+                        - EURUSD
+                        - AED
+                        - AFN
+                        - ALL
+                        - AMD
+                        - ANG
+                        - AOA
+                        - ARS
+                        - AUD
+                        - AWG
+                        - AZN
+                        - BAM
+                        - BBD
+                        - BDT
+                        - BGN
+                        - BHD
+                        - BIF
+                        - BMD
+                        - BND
+                        - BOB
+                        - BRL
+                        - BSD
+                        - BTN
+                        - BWP
+                        - BYR
+                        - BZD
+                        - CAD
+                        - CDF
+                        - CHF
+                        - CKD
+                        - CLP
+                        - CNY
+                        - COP
+                        - CRC
+                        - CUP
+                        - CVE
+                        - CZK
+                        - DJF
+                        - DKK
+                        - DOP
+                        - DZD
+                        - EGP
+                        - ERN
+                        - ETB
+                        - EUR
+                        - FJD
+                        - FKP
+                        - FOK
+                        - GBP
+                        - GEL
+                        - GGP
+                        - GHS
+                        - GIP
+                        - GMD
+                        - GNF
+                        - GTQ
+                        - GYD
+                        - HKD
+                        - HNL
+                        - HRK
+                        - HTG
+                        - HUF
+                        - IDR
+                        - ILS
+                        - IMP
+                        - INR
+                        - IQD
+                        - IRR
+                        - ISK
+                        - JEP
+                        - JMD
+                        - JOD
+                        - JPY
+                        - KES
+                        - KGS
+                        - KHR
+                        - KID
+                        - KMF
+                        - KPW
+                        - KRW
+                        - KWD
+                        - KYD
+                        - KZT
+                        - LAK
+                        - LBP
+                        - LKR
+                        - LRD
+                        - LSL
+                        - LYD
+                        - MAD
+                        - MDL
+                        - MGA
+                        - MKD
+                        - MMK
+                        - MNT
+                        - MOP
+                        - MRO
+                        - MUR
+                        - MVR
+                        - MWK
+                        - MXN
+                        - MYR
+                        - MZN
+                        - NAD
+                        - NGN
+                        - NIO
+                        - NOK
+                        - NPR
+                        - NZD
+                        - OMR
+                        - PAB
+                        - PEN
+                        - PGK
+                        - PHP
+                        - PKR
+                        - PLN
+                        - PYG
+                        - QAR
+                        - RON
+                        - RSD
+                        - RUB
+                        - RWF
+                        - SAR
+                        - SBD
+                        - SCR
+                        - SDG
+                        - SEK
+                        - SGD
+                        - SHP
+                        - SLL
+                        - SOS
+                        - SRD
+                        - SSP
+                        - STD
+                        - SYP
+                        - SZL
+                        - THB
+                        - TJS
+                        - TMT
+                        - TND
+                        - TOP
+                        - TRY
+                        - TTD
+                        - TVD
+                        - TWD
+                        - TZS
+                        - UAH
+                        - UGX
+                        - USD
+                        - UYU
+                        - UZS
+                        - VEF
+                        - VND
+                        - VUV
+                        - WST
+                        - XAF
+                        - XCD
+                        - XOF
+                        - XPF
+                        - YER
+                        - ZAR
+                        - ZMW
+                        - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - TARGET
+                        - Turkey
+                        - UnitedStates
+                        - UnitedKingdom
+                        - Israel
+                        - Poland
+                        - Slovakia
+                        - Romania
+                        - Indonesia
+                        - SouthAfrica
+                        - Germany
+                        - CzechRepublic
+                        - SouthKorea
+                        - BespokeCalendar
+                        - Japan
+                        - Singapore
+                        - Switzerland
+                        - Taiwan
+                        - China
+                        - Brazil
+                        - Italy
+                        - Finland
+                        - Botswana
+                        - Mexico
+                        - Ukraine
+                        - India
+                        - HongKong
+                        - Sweden
+                        - Iceland
+                        - SaudiArabia
+                        - NewZealand
+                        - Denmark
+                        - Russia
+                        - Argentina
+                        - NullCalendar
+                        - Thailand
+                        - WeekendsOnly
+                        - France
+                        - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                        - toEnumCase
+                      enum:
+                        - Actual360
+                        - Actual360Fixed
+                        - Actual365Fixed
+                        - ActualActual
+                        - Business252
+                        - OneDayCounter
+                        - SimpleDayCounter
+                        - Thirty360
+                        - Actual365
+                        - ActualActualİSMA
+                        - ActualActualİSDA
+                        - ActualActualAFB
+                        - ActualActualEURO
+                    period:
+                      type: string
+                      oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                    helpers:
+                      type: object
+                      properties:
+                        DEPO:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string(businessDayConvention)
+                              enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                            dayCounter:
+                              type: string(dayCounter)
+                              enum:
+                                - Actual360
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                              description: Accrual day counter
+                        FUTURES:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string(businessDayConvention)
+                              enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                            dayCounter:
+                              type: string(dayCounter)
+                              enum:
+                                - Actual360
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                              description: Accrual day counter
+                            market:
+                              type: string
+                              enum:
+                                - IMM
+                                - ASX
+                            usedates:
+                              type: boolean
+                        IRS:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string(businessDayConvention)
+                              enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                            dayCounter:
+                              type: string(dayCounter)
+                              enum:
+                                - Actual360
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                              description: Accrual day counter
+                            frequency:
+                              type: string
+                              enum:
+                                - NoFrequency
+                                - Once
+                                - Annual
+                                - Semiannual
+                                - EveryFourthMonth
+                                - Quarterly
+                                - Bimonthly
+                                - Monthly
+                                - EveryFourthWeek
+                                - Biweekly
+                                - Weekly
+                                - Daily
+                                - OtherFrequency
+                              description: Schedule payment frequency.
+                yieldData:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - valuationDate
+                      - maturityDate
+                      - currency
+                      - instrument
+                      - tenor
+                      - value
+                      - period
+                      - settlementDate
+                    properties:
+                      valuationDate:
+                        type: string
+                        format: date
+                        oneOf:
+                          - type: string
+                            maxLength: 0
+                          - type: string
+                            format: date
+                            minLength: 1
+                      maturityDate:
+                        type: string
+                        oneOf:
+                          - maxLength: 0
+                          - format: date
+                            minLength: 1
+                      currency:
+                        type: string
+                        enum:
+                          - EURUSD
+                          - AED
+                          - AFN
+                          - ALL
+                          - AMD
+                          - ANG
+                          - AOA
+                          - ARS
+                          - AUD
+                          - AWG
+                          - AZN
+                          - BAM
+                          - BBD
+                          - BDT
+                          - BGN
+                          - BHD
+                          - BIF
+                          - BMD
+                          - BND
+                          - BOB
+                          - BRL
+                          - BSD
+                          - BTN
+                          - BWP
+                          - BYR
+                          - BZD
+                          - CAD
+                          - CDF
+                          - CHF
+                          - CKD
+                          - CLP
+                          - CNY
+                          - COP
+                          - CRC
+                          - CUP
+                          - CVE
+                          - CZK
+                          - DJF
+                          - DKK
+                          - DOP
+                          - DZD
+                          - EGP
+                          - ERN
+                          - ETB
+                          - EUR
+                          - FJD
+                          - FKP
+                          - FOK
+                          - GBP
+                          - GEL
+                          - GGP
+                          - GHS
+                          - GIP
+                          - GMD
+                          - GNF
+                          - GTQ
+                          - GYD
+                          - HKD
+                          - HNL
+                          - HRK
+                          - HTG
+                          - HUF
+                          - IDR
+                          - ILS
+                          - IMP
+                          - INR
+                          - IQD
+                          - IRR
+                          - ISK
+                          - JEP
+                          - JMD
+                          - JOD
+                          - JPY
+                          - KES
+                          - KGS
+                          - KHR
+                          - KID
+                          - KMF
+                          - KPW
+                          - KRW
+                          - KWD
+                          - KYD
+                          - KZT
+                          - LAK
+                          - LBP
+                          - LKR
+                          - LRD
+                          - LSL
+                          - LYD
+                          - MAD
+                          - MDL
+                          - MGA
+                          - MKD
+                          - MMK
+                          - MNT
+                          - MOP
+                          - MRO
+                          - MUR
+                          - MVR
+                          - MWK
+                          - MXN
+                          - MYR
+                          - MZN
+                          - NAD
+                          - NGN
+                          - NIO
+                          - NOK
+                          - NPR
+                          - NZD
+                          - OMR
+                          - PAB
+                          - PEN
+                          - PGK
+                          - PHP
+                          - PKR
+                          - PLN
+                          - PYG
+                          - QAR
+                          - RON
+                          - RSD
+                          - RUB
+                          - RWF
+                          - SAR
+                          - SBD
+                          - SCR
+                          - SDG
+                          - SEK
+                          - SGD
+                          - SHP
+                          - SLL
+                          - SOS
+                          - SRD
+                          - SSP
+                          - STD
+                          - SYP
+                          - SZL
+                          - THB
+                          - TJS
+                          - TMT
+                          - TND
+                          - TOP
+                          - TRY
+                          - TTD
+                          - TVD
+                          - TWD
+                          - TZS
+                          - UAH
+                          - UGX
+                          - USD
+                          - UYU
+                          - UZS
+                          - VEF
+                          - VND
+                          - VUV
+                          - WST
+                          - XAF
+                          - XCD
+                          - XOF
+                          - XPF
+                          - YER
+                          - ZAR
+                          - ZMW
+                          - ZWL
+                        oneOf:
+                          - maxLength: 0
+                            type: string
+                          - minLength: 1
+                            type: string
+                      instrument:
+                        type: string
+                        oneOf:
+                          - maxLength: 0
+                            type: string
+                          - minLength: 1
+                            type: string
+                      tenor:
+                        type: string
+                        oneOf:
+                          - maxLength: 0
+                            type: string
+                          - minLength: 1
+                            type: string
+                      value:
+                        type: number
+                        oneOf:
+                          - maxLength: 0
+                            type: string
+                          - minLength: 1
+                            type: number
+                            float: float
+                      period:
+                        type: string
+                        oneOf:
+                          - maxLength: 0
+                            type: string
+                          - minLength: 1
+                            type: string
+                      settlementDate:
+                        type: string
+                        oneOf:
+                          - maxLength: 0
+                            type: string
+                          - minLength: 1
+                            type: string
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskId:
+                    type: string
   "/data-sources":
     post:
       summary: Load Method
