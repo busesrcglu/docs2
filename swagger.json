@@ -3186,14 +3186,15 @@ paths:
                 properties:
                   taskId:
                     type: string
-  "/data-sources":
+  /data-sources:
     post:
       summary: Load Method
-      description: 'RPEngineClient.core.load({calculationName: ''calculation-name'',data:
-        {calculation parameters} })'
+      description: >-
+        RPEngineClient.core.load({calculationName: 'calculation-name',data:
+        {calculation parameters} })
       operationId: loadMethodNode
       tags:
-      - nodeClient
+        - nodeClient
       requestBody:
         description: Client object
         required: true
@@ -3201,9 +3202,9 @@ paths:
           application/json:
             schema:
               required:
-              - name
-              - type
-              - file
+                - name
+                - type
+                - file
               type: object
               properties:
                 name:
@@ -3213,30 +3214,26 @@ paths:
                 type:
                   type: integer
                   enum:
-                  - "\nyieldCurve: 0 \n"
-                  - "yieldData: 1 \n"
-                  - 'fixedRateBondDefinition: 2
+                    - |
 
-                    '
-                  - 'vanillaOptionDefinition: 3
-
-                    '
-                  - 'pricesForVolMarketData: 4
-
-                    '
-                  - 'floatingBondDefinition: 5
-
-                    '
-                  - 'deposits: 6
-
-                    '
-                  - 'zciisData: 7
-
-                    '
-                  - 'futureFixingDays: 8
-
-                    '
-                  - 'fixData: 9'
+                      yieldCurve: 0 
+                    - |
+                      yieldData: 1 
+                    - |
+                      fixedRateBondDefinition: 2
+                    - |
+                      vanillaOptionDefinition: 3
+                    - |
+                      pricesForVolMarketData: 4
+                    - |
+                      floatingBondDefinition: 5
+                    - |
+                      deposits: 6
+                    - |
+                      zciisData: 7
+                    - |
+                      futureFixingDays: 8
+                    - 'fixData: 9'
                 file:
                   type: object
                   additionalProperties: false
@@ -3253,13 +3250,13 @@ paths:
                     type: object
                     readOnly: true
                     description: Your data source parameters
-  "/tasks/{taskID}":
+  /tasks/{taskID}:
     get:
       summary: Get Calculation Result
       operationId: getResultMethodNode
       description: 'RPEngineClient.core.getResult({taskID: ''Your_Calculation_Identifier''})'
       tags:
-      - nodeClient
+        - nodeClient
       requestBody:
         description: Client object
         required: true
@@ -3267,7 +3264,7 @@ paths:
           application/json:
             schema:
               required:
-              - taskID
+                - taskID
               type: object
               properties:
                 taskID:
@@ -3322,14 +3319,15 @@ paths:
                         type: number
                       totalEffectiveness:
                         type: number
-  "/tasks/{calculation-Name}":
+  /tasks/{calculation-Name}:
     post:
       summary: Calculate Method
-      description: 'RPEngineClient.core.calculate({calculationName: ''calculation-name'',data:
-        {calculation parameters} })'
+      description: >-
+        RPEngineClient.core.calculate({calculationName: 'calculation-name',data:
+        {calculation parameters} })
       operationId: calculateMethodPython
       tags:
-      - pythonClient
+        - pythonClient
       requestBody:
         description: Client object
         required: true
@@ -3337,14 +3335,15 @@ paths:
           application/json:
             schema:
               required:
-              - calculationName
-              - data
+                - calculationName
+                - data
               type: object
               properties:
                 calculationName:
                   type: string
-                  description: 'Name of the calculation to create.Multi-word nouns
-                    are separated by hyphens (-). For example: ''fixed-rate-bond'''
+                  description: >-
+                    Name of the calculation to create.Multi-word nouns are
+                    separated by hyphens (-). For example: 'fixed-rate-bond'
                   readOnly: true
                 data:
                   type: object
@@ -3362,14 +3361,15 @@ paths:
                     type: string
                     readOnly: true
                     description: Your calculation identifier
-  "/dataSources":
+  /dataSources:
     post:
       summary: Load Method
-      description: 'RPEngineClient.core.load({calculationName: ''calculation-name'',data:
-        {calculation parameters} })'
+      description: >-
+        RPEngineClient.core.load({calculationName: 'calculation-name',data:
+        {calculation parameters} })
       operationId: loadMethod
       tags:
-      - pythonClient
+        - pythonClient
       requestBody:
         description: Client object
         required: true
@@ -3377,9 +3377,9 @@ paths:
           application/json:
             schema:
               required:
-              - name
-              - type
-              - file
+                - name
+                - type
+                - file
               type: object
               properties:
                 name:
@@ -3389,30 +3389,26 @@ paths:
                 type:
                   type: integer
                   enum:
-                  - "\nyieldCurve: 0 \n"
-                  - "yieldData: 1 \n"
-                  - 'fixedRateBondDefinition: 2
+                    - |
 
-                    '
-                  - 'vanillaOptionDefinition: 3
-
-                    '
-                  - 'pricesForVolMarketData: 4
-
-                    '
-                  - 'floatingBondDefinition: 5
-
-                    '
-                  - 'deposits: 6
-
-                    '
-                  - 'zciisData: 7
-
-                    '
-                  - 'futureFixingDays: 8
-
-                    '
-                  - 'fixData: 9'
+                      yieldCurve: 0 
+                    - |
+                      yieldData: 1 
+                    - |
+                      fixedRateBondDefinition: 2
+                    - |
+                      vanillaOptionDefinition: 3
+                    - |
+                      pricesForVolMarketData: 4
+                    - |
+                      floatingBondDefinition: 5
+                    - |
+                      deposits: 6
+                    - |
+                      zciisData: 7
+                    - |
+                      futureFixingDays: 8
+                    - 'fixData: 9'
                 file:
                   type: object
                   additionalProperties: false
@@ -3429,13 +3425,13 @@ paths:
                     type: object
                     readOnly: true
                     description: Your data source parameters
-  "/tasks/{task_ID}":
+  /tasks/{task_ID}:
     get:
       summary: Get Calculation Result
       operationId: getResultMethodPython
       description: 'RPEngineClient.core.getResult({taskID: ''Your_Calculation_Identifier''})'
       tags:
-      - pythonClient
+        - pythonClient
       requestBody:
         description: Client object
         required: true
@@ -3443,7 +3439,7 @@ paths:
           application/json:
             schema:
               required:
-              - taskID
+                - taskID
               type: object
               properties:
                 taskID:
@@ -3503,8 +3499,8 @@ definitions:
     PlusAuthError:
       type: object
       required:
-      - status
-      - error
+        - status
+        - error
       properties:
         status:
           type: integer
@@ -3519,8 +3515,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3535,8 +3531,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3554,7 +3550,7 @@ definitions:
               value:
                 status: 422
                 error: invalid_entity
-                error_description: "\\'<field>\\' should NOT be longer than 255 characters"
+                error_description: \'<field>\' should NOT be longer than 255 characters
     EntityNotFound:
       description: Provided entity not found.
       content:
@@ -3562,8 +3558,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3578,86 +3574,86 @@ definitions:
               status: 404
     UnauthorizedAction:
       anyOf:
-      - description: Invalid audience is used
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - status
-              - error
-              properties:
-                status:
-                  type: integer
-                error:
-                  type: string
-                error_description:
-                  type: string
-            example:
-              value:
-                error: unauthorized_action
-                error_description: 'Incorrect audience "<audience>" Expected: "<audience>"'
-                status: 403
-      - description: Invalid Issuer is used
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - status
-              - error
-              properties:
-                status:
-                  type: integer
-                error:
-                  type: string
-                error_description:
-                  type: string
-            example:
-              value:
-                error: unauthorized_action
-                error_description: Invalid issuer "<issuer>"
-                status: 403
-      - description: Required scope is missing
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - status
-              - error
-              properties:
-                status:
-                  type: integer
-                error:
-                  type: string
-                error_description:
-                  type: string
-            example:
-              value:
-                error: unauthorized_action
-                error_description: \"<scope>\" is required to access this endpoint
-                status: 403
-      - description: User is unauthorized for the tenant
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - status
-              - error
-              properties:
-                status:
-                  type: integer
-                error:
-                  type: string
-                error_description:
-                  type: string
-            example:
-              value:
-                error: unauthorized_action
-                error_description: User is unauthorized for this tenant
-                status: 403
+        - description: Invalid audience is used
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  error_description:
+                    type: string
+              example:
+                value:
+                  error: unauthorized_action
+                  error_description: 'Incorrect audience "<audience>" Expected: "<audience>"'
+                  status: 403
+        - description: Invalid Issuer is used
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  error_description:
+                    type: string
+              example:
+                value:
+                  error: unauthorized_action
+                  error_description: Invalid issuer "<issuer>"
+                  status: 403
+        - description: Required scope is missing
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  error_description:
+                    type: string
+              example:
+                value:
+                  error: unauthorized_action
+                  error_description: \"<scope>\" is required to access this endpoint
+                  status: 403
+        - description: User is unauthorized for the tenant
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  error_description:
+                    type: string
+              example:
+                value:
+                  error: unauthorized_action
+                  error_description: User is unauthorized for this tenant
+                  status: 403
     InvalidAudience:
       description: Invalid audience is used
       content:
@@ -3665,8 +3661,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3686,8 +3682,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3707,8 +3703,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3728,8 +3724,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3744,46 +3740,46 @@ definitions:
               status: 403
     Unauthorized:
       anyOf:
-      - description: Invalid authorization scheme
-        context:
-          application/json:
-            schema:
-              type: object
-              required:
-              - status
-              - error
-              properties:
-                status:
-                  type: integer
-                error:
-                  type: string
-                error_description:
-                  type: string
-            example:
-              value:
-                error: unauthorized_request
-                error_description: Authentication scheme must be Bearer
-                status: 401
-      - description: Authorization token is missing
-        context:
-          application/json:
-            schema:
-              type: object
-              required:
-              - status
-              - error
-              properties:
-                status:
-                  type: integer
-                error:
-                  type: string
-                error_description:
-                  type: string
-            example:
-              value:
-                error: unauthorized_request
-                error_description: Missing authorization header
-                status: 401
+        - description: Invalid authorization scheme
+          context:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  error_description:
+                    type: string
+              example:
+                value:
+                  error: unauthorized_request
+                  error_description: Authentication scheme must be Bearer
+                  status: 401
+        - description: Authorization token is missing
+          context:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                  - error
+                properties:
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  error_description:
+                    type: string
+              example:
+                value:
+                  error: unauthorized_request
+                  error_description: Missing authorization header
+                  status: 401
     InvalidAuthorizationScheme:
       description: Invalid authorization scheme
       context:
@@ -3791,8 +3787,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3812,8 +3808,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3833,8 +3829,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3846,8 +3842,7 @@ definitions:
             value:
               status: 409
               error: already_exists
-              error_description: \"<resource>\" with provided \"<field>\" already
-                exists.
+              error_description: \"<resource>\" with provided \"<field>\" already exists.
     InvalidField:
       description: Invalid field used in query
       content:
@@ -3855,8 +3850,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3876,8 +3871,8 @@ definitions:
           schema:
             type: object
             required:
-            - status
-            - error
+              - status
+              - error
             properties:
               status:
                 type: integer
@@ -3938,8 +3933,9 @@ components:
     q:
       name: q
       in: query
-      description: Additional query in [PlusAuth Query Language](https://docs.plusauth.com/api/core/query-syntax)
-        format.
+      description: >-
+        Additional query in [PlusAuth Query
+        Language](https://docs.plusauth.com/api/core/query-syntax) format.
       required: false
       schema:
         type: string
@@ -3956,27 +3952,27 @@ components:
     HookType:
       type: string
       enum:
-      - pre_register
-      - post_register
-      - pre_login
-      - post_login
-      - pre_mfa
-      - pre_access_token
-      - pre_id_token
-      - pre_fc_import
-      - pre_fc_export
+        - pre_register
+        - post_register
+        - pre_login
+        - post_login
+        - pre_mfa
+        - pre_access_token
+        - pre_id_token
+        - pre_fc_import
+        - pre_fc_export
 servers:
-- url: "{apiUrl}/api"
-  variables:
-    apiUrl:
-      default: https://app.rhoova.com
-      enum:
-      - https://app.rhoova.com
+  - url: '{apiUrl}/api'
+    variables:
+      apiUrl:
+        default: https://app.rhoova.com
+        enum:
+          - https://app.rhoova.com
 tags: []
 security:
-- ApiKeyAuth:
-    type: apiKey
-    in: header
-    name: X-API-Key
-  secretKey: []
-- apiKey: []
+  - ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    secretKey: []
+  - apiKey: []
