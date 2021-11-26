@@ -2241,960 +2241,14 @@ paths:
                 properties:
                   taskId:
                     type: string
-/tasks/fixed-rate-bond:
-    post:
-      summary: Create Fixed Rate Bond Calculation
-      security:
-        - BearerAuth:
-            - read:client
-      tags:
-        - calculations
-      requestBody:
-        description: Client object
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - notional
-                - valuationDate
-                - settlementDate
-                - buySell
-                - fixedRateBondDefinition
-                - discountCurve
-              properties:
-                notional:
-                  type: number
-                valuationDate:
-                  type: string
-                  format: date
-                settlementDate:
-                  type: string
-                  format: date
-                  formatMinimum:
-                    $data: 1/valuationDate
-                buySell:
-                  type: string
-                  transform:
-                    - toEnumCase
-                  enum:
-                    - buy
-                    - sell
-                fixedRateBondDefinition:
-                  type: object
-                  properties:
-                    redemption:
-                      type: number
-                    period:
-                      type: string
-                      oneOf:
-                        - maxLength: 0
-                          type: string
-                        - minLength: 1
-                          type: string
-                    maturityDate:
-                      type: string
-                      format: date
-                    issueDate:
-                      type: string
-                      format: date
-                    businessDayConv:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - Following
-                        - ModifiedFollowing
-                        - Preceding
-                        - ModifiedPreceding
-                        - Unadjusted
-                        - HalfMonthModifiedFollowing
-                        - Nearest
-                    maturityDayConvention:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - Following
-                        - ModifiedFollowing
-                        - Preceding
-                        - ModifiedPreceding
-                        - Unadjusted
-                        - HalfMonthModifiedFollowing
-                        - Nearest
-                    dateGeneration:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - Backward
-                        - Forward
-                        - Zero
-                        - ThirdWednesday
-                        - Twentieth
-                        - TwentiethIMM
-                        - OldCDS
-                        - CDS
-                        - CDS2015
-                    calendar:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - TARGET
-                        - Turkey
-                        - UnitedStates
-                        - UnitedKingdom
-                        - Israel
-                        - Poland
-                        - Slovakia
-                        - Romania
-                        - Indonesia
-                        - SouthAfrica
-                        - Germany
-                        - CzechRepublic
-                        - SouthKorea
-                        - BespokeCalendar
-                        - Japan
-                        - Singapore
-                        - Switzerland
-                        - Taiwan
-                        - China
-                        - Brazil
-                        - Italy
-                        - Finland
-                        - Botswana
-                        - Mexico
-                        - Ukraine
-                        - India
-                        - HongKong
-                        - Sweden
-                        - Iceland
-                        - SaudiArabia
-                        - NewZealand
-                        - Denmark
-                        - Russia
-                        - Argentina
-                        - NullCalendar
-                        - Thailand
-                        - WeekendsOnly
-                        - France
-                        - Norway
-                    dayCountConvention:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - Actual360
-                        - Actual365Fixed
-                        - ActualActual
-                        - Business252
-                        - OneDayCounter
-                        - SimpleDayCounter
-                        - Thirty360
-                        - Actual365
-                        - ActualActualİSMA
-                        - ActualActualİSDA
-                        - ActualActualAFB
-                        - ActualActualEURO
-                    coupon:
-                      type: number
-                    endOfMonth:
-                      type: boolean
-                    currency:
-                      type: string
-                      enum:
-                        - EURUSD
-                        - AED
-                        - AFN
-                        - ALL
-                        - AMD
-                        - ANG
-                        - AOA
-                        - ARS
-                        - AUD
-                        - AWG
-                        - AZN
-                        - BAM
-                        - BBD
-                        - BDT
-                        - BGN
-                        - BHD
-                        - BIF
-                        - BMD
-                        - BND
-                        - BOB
-                        - BRL
-                        - BSD
-                        - BTN
-                        - BWP
-                        - BYR
-                        - BZD
-                        - CAD
-                        - CDF
-                        - CHF
-                        - CKD
-                        - CLP
-                        - CNY
-                        - COP
-                        - CRC
-                        - CUP
-                        - CVE
-                        - CZK
-                        - DJF
-                        - DKK
-                        - DOP
-                        - DZD
-                        - EGP
-                        - ERN
-                        - ETB
-                        - EUR
-                        - FJD
-                        - FKP
-                        - FOK
-                        - GBP
-                        - GEL
-                        - GGP
-                        - GHS
-                        - GIP
-                        - GMD
-                        - GNF
-                        - GTQ
-                        - GYD
-                        - HKD
-                        - HNL
-                        - HRK
-                        - HTG
-                        - HUF
-                        - IDR
-                        - ILS
-                        - IMP
-                        - INR
-                        - IQD
-                        - IRR
-                        - ISK
-                        - JEP
-                        - JMD
-                        - JOD
-                        - JPY
-                        - KES
-                        - KGS
-                        - KHR
-                        - KID
-                        - KMF
-                        - KPW
-                        - KRW
-                        - KWD
-                        - KYD
-                        - KZT
-                        - LAK
-                        - LBP
-                        - LKR
-                        - LRD
-                        - LSL
-                        - LYD
-                        - MAD
-                        - MDL
-                        - MGA
-                        - MKD
-                        - MMK
-                        - MNT
-                        - MOP
-                        - MRO
-                        - MUR
-                        - MVR
-                        - MWK
-                        - MXN
-                        - MYR
-                        - MZN
-                        - NAD
-                        - NGN
-                        - NIO
-                        - NOK
-                        - NPR
-                        - NZD
-                        - OMR
-                        - PAB
-                        - PEN
-                        - PGK
-                        - PHP
-                        - PKR
-                        - PLN
-                        - PYG
-                        - QAR
-                        - RON
-                        - RSD
-                        - RUB
-                        - RWF
-                        - SAR
-                        - SBD
-                        - SCR
-                        - SDG
-                        - SEK
-                        - SGD
-                        - SHP
-                        - SLL
-                        - SOS
-                        - SRD
-                        - SSP
-                        - STD
-                        - SYP
-                        - SZL
-                        - THB
-                        - TJS
-                        - TMT
-                        - TND
-                        - TOP
-                        - TRY
-                        - TTD
-                        - TVD
-                        - TWD
-                        - TZS
-                        - UAH
-                        - UGX
-                        - USD
-                        - UYU
-                        - UZS
-                        - VEF
-                        - VND
-                        - VUV
-                        - WST
-                        - XAF
-                        - XCD
-                        - XOF
-                        - XPF
-                        - YER
-                        - ZAR
-                        - ZMW
-                        - ZWL
-                discountCurve:
-                  required:
-                    - settlementDays
-                    - intpMethod
-                    - currency
-                    - period
-                    - ''
-                  type: object
-                  properties:
-                    settlementDays:
-                      type: number
-                    intpMethod:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - Linear
-                        - LogLinear
-                        - Cubic
-                        - LogCubic
-                    currency:
-                      type: string
-                      enum:
-                        - EURUSD
-                        - AED
-                        - AFN
-                        - ALL
-                        - AMD
-                        - ANG
-                        - AOA
-                        - ARS
-                        - AUD
-                        - AWG
-                        - AZN
-                        - BAM
-                        - BBD
-                        - BDT
-                        - BGN
-                        - BHD
-                        - BIF
-                        - BMD
-                        - BND
-                        - BOB
-                        - BRL
-                        - BSD
-                        - BTN
-                        - BWP
-                        - BYR
-                        - BZD
-                        - CAD
-                        - CDF
-                        - CHF
-                        - CKD
-                        - CLP
-                        - CNY
-                        - COP
-                        - CRC
-                        - CUP
-                        - CVE
-                        - CZK
-                        - DJF
-                        - DKK
-                        - DOP
-                        - DZD
-                        - EGP
-                        - ERN
-                        - ETB
-                        - EUR
-                        - FJD
-                        - FKP
-                        - FOK
-                        - GBP
-                        - GEL
-                        - GGP
-                        - GHS
-                        - GIP
-                        - GMD
-                        - GNF
-                        - GTQ
-                        - GYD
-                        - HKD
-                        - HNL
-                        - HRK
-                        - HTG
-                        - HUF
-                        - IDR
-                        - ILS
-                        - IMP
-                        - INR
-                        - IQD
-                        - IRR
-                        - ISK
-                        - JEP
-                        - JMD
-                        - JOD
-                        - JPY
-                        - KES
-                        - KGS
-                        - KHR
-                        - KID
-                        - KMF
-                        - KPW
-                        - KRW
-                        - KWD
-                        - KYD
-                        - KZT
-                        - LAK
-                        - LBP
-                        - LKR
-                        - LRD
-                        - LSL
-                        - LYD
-                        - MAD
-                        - MDL
-                        - MGA
-                        - MKD
-                        - MMK
-                        - MNT
-                        - MOP
-                        - MRO
-                        - MUR
-                        - MVR
-                        - MWK
-                        - MXN
-                        - MYR
-                        - MZN
-                        - NAD
-                        - NGN
-                        - NIO
-                        - NOK
-                        - NPR
-                        - NZD
-                        - OMR
-                        - PAB
-                        - PEN
-                        - PGK
-                        - PHP
-                        - PKR
-                        - PLN
-                        - PYG
-                        - QAR
-                        - RON
-                        - RSD
-                        - RUB
-                        - RWF
-                        - SAR
-                        - SBD
-                        - SCR
-                        - SDG
-                        - SEK
-                        - SGD
-                        - SHP
-                        - SLL
-                        - SOS
-                        - SRD
-                        - SSP
-                        - STD
-                        - SYP
-                        - SZL
-                        - THB
-                        - TJS
-                        - TMT
-                        - TND
-                        - TOP
-                        - TRY
-                        - TTD
-                        - TVD
-                        - TWD
-                        - TZS
-                        - UAH
-                        - UGX
-                        - USD
-                        - UYU
-                        - UZS
-                        - VEF
-                        - VND
-                        - VUV
-                        - WST
-                        - XAF
-                        - XCD
-                        - XOF
-                        - XPF
-                        - YER
-                        - ZAR
-                        - ZMW
-                        - ZWL
-                    calendar:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - TARGET
-                        - Turkey
-                        - UnitedStates
-                        - UnitedKingdom
-                        - Israel
-                        - Poland
-                        - Slovakia
-                        - Romania
-                        - Indonesia
-                        - SouthAfrica
-                        - Germany
-                        - CzechRepublic
-                        - SouthKorea
-                        - BespokeCalendar
-                        - Japan
-                        - Singapore
-                        - Switzerland
-                        - Taiwan
-                        - China
-                        - Brazil
-                        - Italy
-                        - Finland
-                        - Botswana
-                        - Mexico
-                        - Ukraine
-                        - India
-                        - HongKong
-                        - Sweden
-                        - Iceland
-                        - SaudiArabia
-                        - NewZealand
-                        - Denmark
-                        - Russia
-                        - Argentina
-                        - NullCalendar
-                        - Thailand
-                        - WeekendsOnly
-                        - France
-                        - Norway
-                    dayCounter:
-                      type: string
-                      transform:
-                        - toEnumCase
-                      enum:
-                        - Actual360
-                        - Actual360Fixed
-                        - Actual365Fixed
-                        - ActualActual
-                        - Business252
-                        - OneDayCounter
-                        - SimpleDayCounter
-                        - Thirty360
-                        - Actual365
-                        - ActualActualİSMA
-                        - ActualActualİSDA
-                        - ActualActualAFB
-                        - ActualActualEURO
-                    period:
-                      type: string
-                      oneOf:
-                        - maxLength: 0
-                          type: string
-                        - minLength: 1
-                          type: string
-                    helpers:
-                      type: object
-                      properties:
-                        DEPO:
-                          type: object
-                          additionalProperties: false
-                          properties:
-                            businessDayConvention:
-                              type: string(businessDayConvention)
-                              enum:
-                                - Following
-                                - ModifiedFollowing
-                                - Preceding
-                                - ModifiedPreceding
-                                - Unadjusted
-                                - HalfMonthModifiedFollowing
-                                - Nearest
-                            dayCounter:
-                              type: string(dayCounter)
-                              enum:
-                                - Actual360
-                                - Actual365Fixed
-                                - ActualActual
-                                - Business252
-                                - OneDayCounter
-                                - SimpleDayCounter
-                                - Thirty360
-                                - Actual365
-                                - ActualActualİSMA
-                                - ActualActualİSDA
-                                - ActualActualAFB
-                                - ActualActualEURO
-                              description: Accrual day counter
-                        FUTURES:
-                          type: object
-                          additionalProperties: false
-                          properties:
-                            businessDayConvention:
-                              type: string(businessDayConvention)
-                              enum:
-                                - Following
-                                - ModifiedFollowing
-                                - Preceding
-                                - ModifiedPreceding
-                                - Unadjusted
-                                - HalfMonthModifiedFollowing
-                                - Nearest
-                            dayCounter:
-                              type: string(dayCounter)
-                              enum:
-                                - Actual360
-                                - Actual365Fixed
-                                - ActualActual
-                                - Business252
-                                - OneDayCounter
-                                - SimpleDayCounter
-                                - Thirty360
-                                - Actual365
-                                - ActualActualİSMA
-                                - ActualActualİSDA
-                                - ActualActualAFB
-                                - ActualActualEURO
-                              description: Accrual day counter
-                            market:
-                              type: string
-                              enum:
-                                - IMM
-                                - ASX
-                            usedates:
-                              type: boolean
-                        IRS:
-                          type: object
-                          additionalProperties: false
-                          properties:
-                            businessDayConvention:
-                              type: string(businessDayConvention)
-                              enum:
-                                - Following
-                                - ModifiedFollowing
-                                - Preceding
-                                - ModifiedPreceding
-                                - Unadjusted
-                                - HalfMonthModifiedFollowing
-                                - Nearest
-                            dayCounter:
-                              type: string(dayCounter)
-                              enum:
-                                - Actual360
-                                - Actual365Fixed
-                                - ActualActual
-                                - Business252
-                                - OneDayCounter
-                                - SimpleDayCounter
-                                - Thirty360
-                                - Actual365
-                                - ActualActualİSMA
-                                - ActualActualİSDA
-                                - ActualActualAFB
-                                - ActualActualEURO
-                              description: Accrual day counter
-                            frequency:
-                              type: string
-                              enum:
-                                - NoFrequency
-                                - Once
-                                - Annual
-                                - Semiannual
-                                - EveryFourthMonth
-                                - Quarterly
-                                - Bimonthly
-                                - Monthly
-                                - EveryFourthWeek
-                                - Biweekly
-                                - Weekly
-                                - Daily
-                                - OtherFrequency
-                              description: Schedule payment frequency.
-                yieldData:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - valuationDate
-                      - maturityDate
-                      - currency
-                      - instrument
-                      - tenor
-                      - value
-                      - period
-                      - settlementDate
-                    properties:
-                      valuationDate:
-                        type: string
-                        format: date
-                        oneOf:
-                          - type: string
-                            maxLength: 0
-                          - type: string
-                            format: date
-                            minLength: 1
-                      maturityDate:
-                        type: string
-                        oneOf:
-                          - maxLength: 0
-                          - format: date
-                            minLength: 1
-                      currency:
-                        type: string
-                        enum:
-                          - EURUSD
-                          - AED
-                          - AFN
-                          - ALL
-                          - AMD
-                          - ANG
-                          - AOA
-                          - ARS
-                          - AUD
-                          - AWG
-                          - AZN
-                          - BAM
-                          - BBD
-                          - BDT
-                          - BGN
-                          - BHD
-                          - BIF
-                          - BMD
-                          - BND
-                          - BOB
-                          - BRL
-                          - BSD
-                          - BTN
-                          - BWP
-                          - BYR
-                          - BZD
-                          - CAD
-                          - CDF
-                          - CHF
-                          - CKD
-                          - CLP
-                          - CNY
-                          - COP
-                          - CRC
-                          - CUP
-                          - CVE
-                          - CZK
-                          - DJF
-                          - DKK
-                          - DOP
-                          - DZD
-                          - EGP
-                          - ERN
-                          - ETB
-                          - EUR
-                          - FJD
-                          - FKP
-                          - FOK
-                          - GBP
-                          - GEL
-                          - GGP
-                          - GHS
-                          - GIP
-                          - GMD
-                          - GNF
-                          - GTQ
-                          - GYD
-                          - HKD
-                          - HNL
-                          - HRK
-                          - HTG
-                          - HUF
-                          - IDR
-                          - ILS
-                          - IMP
-                          - INR
-                          - IQD
-                          - IRR
-                          - ISK
-                          - JEP
-                          - JMD
-                          - JOD
-                          - JPY
-                          - KES
-                          - KGS
-                          - KHR
-                          - KID
-                          - KMF
-                          - KPW
-                          - KRW
-                          - KWD
-                          - KYD
-                          - KZT
-                          - LAK
-                          - LBP
-                          - LKR
-                          - LRD
-                          - LSL
-                          - LYD
-                          - MAD
-                          - MDL
-                          - MGA
-                          - MKD
-                          - MMK
-                          - MNT
-                          - MOP
-                          - MRO
-                          - MUR
-                          - MVR
-                          - MWK
-                          - MXN
-                          - MYR
-                          - MZN
-                          - NAD
-                          - NGN
-                          - NIO
-                          - NOK
-                          - NPR
-                          - NZD
-                          - OMR
-                          - PAB
-                          - PEN
-                          - PGK
-                          - PHP
-                          - PKR
-                          - PLN
-                          - PYG
-                          - QAR
-                          - RON
-                          - RSD
-                          - RUB
-                          - RWF
-                          - SAR
-                          - SBD
-                          - SCR
-                          - SDG
-                          - SEK
-                          - SGD
-                          - SHP
-                          - SLL
-                          - SOS
-                          - SRD
-                          - SSP
-                          - STD
-                          - SYP
-                          - SZL
-                          - THB
-                          - TJS
-                          - TMT
-                          - TND
-                          - TOP
-                          - TRY
-                          - TTD
-                          - TVD
-                          - TWD
-                          - TZS
-                          - UAH
-                          - UGX
-                          - USD
-                          - UYU
-                          - UZS
-                          - VEF
-                          - VND
-                          - VUV
-                          - WST
-                          - XAF
-                          - XCD
-                          - XOF
-                          - XPF
-                          - YER
-                          - ZAR
-                          - ZMW
-                          - ZWL
-                        oneOf:
-                          - maxLength: 0
-                            type: string
-                          - minLength: 1
-                            type: string
-                      instrument:
-                        type: string
-                        oneOf:
-                          - maxLength: 0
-                            type: string
-                          - minLength: 1
-                            type: string
-                      tenor:
-                        type: string
-                        oneOf:
-                          - maxLength: 0
-                            type: string
-                          - minLength: 1
-                            type: string
-                      value:
-                        type: number
-                        oneOf:
-                          - maxLength: 0
-                            type: string
-                          - minLength: 1
-                            type: number
-                            float: float
-                      period:
-                        type: string
-                        oneOf:
-                          - maxLength: 0
-                            type: string
-                          - minLength: 1
-                            type: string
-                      settlementDate:
-                        type: string
-                        oneOf:
-                          - maxLength: 0
-                            type: string
-                          - minLength: 1
-                            type: string
-      responses:
-        '200':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  taskId:
-                    type: string
-  /data-sources:
+  "/data-sources":
     post:
       summary: Load Method
-      description: >-
-        RPEngineClient.core.load({calculationName: 'calculation-name',data:
-        {calculation parameters} })
+      description: 'RPEngineClient.core.load({calculationName: ''calculation-name'',data:
+        {calculation parameters} })'
       operationId: loadMethodNode
       tags:
-        - nodeClient
+      - nodeClient
       requestBody:
         description: Client object
         required: true
@@ -3202,9 +2256,9 @@ paths:
           application/json:
             schema:
               required:
-                - name
-                - type
-                - file
+              - name
+              - type
+              - file
               type: object
               properties:
                 name:
@@ -3214,26 +2268,30 @@ paths:
                 type:
                   type: integer
                   enum:
-                    - |
+                  - "\nyieldCurve: 0 \n"
+                  - "yieldData: 1 \n"
+                  - 'fixedRateBondDefinition: 2
 
-                      yieldCurve: 0 
-                    - |
-                      yieldData: 1 
-                    - |
-                      fixedRateBondDefinition: 2
-                    - |
-                      vanillaOptionDefinition: 3
-                    - |
-                      pricesForVolMarketData: 4
-                    - |
-                      floatingBondDefinition: 5
-                    - |
-                      deposits: 6
-                    - |
-                      zciisData: 7
-                    - |
-                      futureFixingDays: 8
-                    - 'fixData: 9'
+                    '
+                  - 'vanillaOptionDefinition: 3
+
+                    '
+                  - 'pricesForVolMarketData: 4
+
+                    '
+                  - 'floatingBondDefinition: 5
+
+                    '
+                  - 'deposits: 6
+
+                    '
+                  - 'zciisData: 7
+
+                    '
+                  - 'futureFixingDays: 8
+
+                    '
+                  - 'fixData: 9'
                 file:
                   type: object
                   additionalProperties: false
@@ -3250,13 +2308,13 @@ paths:
                     type: object
                     readOnly: true
                     description: Your data source parameters
-  /tasks/{taskID}:
+  "/tasks/{taskID}":
     get:
       summary: Get Calculation Result
       operationId: getResultMethodNode
       description: 'RPEngineClient.core.getResult({taskID: ''Your_Calculation_Identifier''})'
       tags:
-        - nodeClient
+      - nodeClient
       requestBody:
         description: Client object
         required: true
@@ -3264,7 +2322,7 @@ paths:
           application/json:
             schema:
               required:
-                - taskID
+              - taskID
               type: object
               properties:
                 taskID:
@@ -3319,15 +2377,14 @@ paths:
                         type: number
                       totalEffectiveness:
                         type: number
-  /tasks/{calculation-Name}:
+  "/tasks/{calculation-Name}":
     post:
       summary: Calculate Method
-      description: >-
-        RPEngineClient.core.calculate({calculationName: 'calculation-name',data:
-        {calculation parameters} })
+      description: 'RPEngineClient.core.calculate({calculationName: ''calculation-name'',data:
+        {calculation parameters} })'
       operationId: calculateMethodPython
       tags:
-        - pythonClient
+      - pythonClient
       requestBody:
         description: Client object
         required: true
@@ -3335,15 +2392,14 @@ paths:
           application/json:
             schema:
               required:
-                - calculationName
-                - data
+              - calculationName
+              - data
               type: object
               properties:
                 calculationName:
                   type: string
-                  description: >-
-                    Name of the calculation to create.Multi-word nouns are
-                    separated by hyphens (-). For example: 'fixed-rate-bond'
+                  description: 'Name of the calculation to create.Multi-word nouns
+                    are separated by hyphens (-). For example: ''fixed-rate-bond'''
                   readOnly: true
                 data:
                   type: object
@@ -3361,15 +2417,14 @@ paths:
                     type: string
                     readOnly: true
                     description: Your calculation identifier
-  /dataSources:
+  "/dataSources":
     post:
       summary: Load Method
-      description: >-
-        RPEngineClient.core.load({calculationName: 'calculation-name',data:
-        {calculation parameters} })
+      description: 'RPEngineClient.core.load({calculationName: ''calculation-name'',data:
+        {calculation parameters} })'
       operationId: loadMethod
       tags:
-        - pythonClient
+      - pythonClient
       requestBody:
         description: Client object
         required: true
@@ -3377,9 +2432,9 @@ paths:
           application/json:
             schema:
               required:
-                - name
-                - type
-                - file
+              - name
+              - type
+              - file
               type: object
               properties:
                 name:
@@ -3389,26 +2444,30 @@ paths:
                 type:
                   type: integer
                   enum:
-                    - |
+                  - "\nyieldCurve: 0 \n"
+                  - "yieldData: 1 \n"
+                  - 'fixedRateBondDefinition: 2
 
-                      yieldCurve: 0 
-                    - |
-                      yieldData: 1 
-                    - |
-                      fixedRateBondDefinition: 2
-                    - |
-                      vanillaOptionDefinition: 3
-                    - |
-                      pricesForVolMarketData: 4
-                    - |
-                      floatingBondDefinition: 5
-                    - |
-                      deposits: 6
-                    - |
-                      zciisData: 7
-                    - |
-                      futureFixingDays: 8
-                    - 'fixData: 9'
+                    '
+                  - 'vanillaOptionDefinition: 3
+
+                    '
+                  - 'pricesForVolMarketData: 4
+
+                    '
+                  - 'floatingBondDefinition: 5
+
+                    '
+                  - 'deposits: 6
+
+                    '
+                  - 'zciisData: 7
+
+                    '
+                  - 'futureFixingDays: 8
+
+                    '
+                  - 'fixData: 9'
                 file:
                   type: object
                   additionalProperties: false
@@ -3425,13 +2484,13 @@ paths:
                     type: object
                     readOnly: true
                     description: Your data source parameters
-  /tasks/{task_ID}:
+  "/tasks/{task_ID}":
     get:
       summary: Get Calculation Result
       operationId: getResultMethodPython
       description: 'RPEngineClient.core.getResult({taskID: ''Your_Calculation_Identifier''})'
       tags:
-        - pythonClient
+      - pythonClient
       requestBody:
         description: Client object
         required: true
@@ -3439,7 +2498,7 @@ paths:
           application/json:
             schema:
               required:
-                - taskID
+              - taskID
               type: object
               properties:
                 taskID:
@@ -3499,8 +2558,8 @@ definitions:
     PlusAuthError:
       type: object
       required:
-        - status
-        - error
+      - status
+      - error
       properties:
         status:
           type: integer
@@ -3515,8 +2574,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3531,8 +2590,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3550,7 +2609,7 @@ definitions:
               value:
                 status: 422
                 error: invalid_entity
-                error_description: \'<field>\' should NOT be longer than 255 characters
+                error_description: "\\'<field>\\' should NOT be longer than 255 characters"
     EntityNotFound:
       description: Provided entity not found.
       content:
@@ -3558,8 +2617,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3574,86 +2633,86 @@ definitions:
               status: 404
     UnauthorizedAction:
       anyOf:
-        - description: Invalid audience is used
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - error
-                properties:
-                  status:
-                    type: integer
-                  error:
-                    type: string
-                  error_description:
-                    type: string
-              example:
-                value:
-                  error: unauthorized_action
-                  error_description: 'Incorrect audience "<audience>" Expected: "<audience>"'
-                  status: 403
-        - description: Invalid Issuer is used
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - error
-                properties:
-                  status:
-                    type: integer
-                  error:
-                    type: string
-                  error_description:
-                    type: string
-              example:
-                value:
-                  error: unauthorized_action
-                  error_description: Invalid issuer "<issuer>"
-                  status: 403
-        - description: Required scope is missing
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - error
-                properties:
-                  status:
-                    type: integer
-                  error:
-                    type: string
-                  error_description:
-                    type: string
-              example:
-                value:
-                  error: unauthorized_action
-                  error_description: \"<scope>\" is required to access this endpoint
-                  status: 403
-        - description: User is unauthorized for the tenant
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - error
-                properties:
-                  status:
-                    type: integer
-                  error:
-                    type: string
-                  error_description:
-                    type: string
-              example:
-                value:
-                  error: unauthorized_action
-                  error_description: User is unauthorized for this tenant
-                  status: 403
+      - description: Invalid audience is used
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              - error
+              properties:
+                status:
+                  type: integer
+                error:
+                  type: string
+                error_description:
+                  type: string
+            example:
+              value:
+                error: unauthorized_action
+                error_description: 'Incorrect audience "<audience>" Expected: "<audience>"'
+                status: 403
+      - description: Invalid Issuer is used
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              - error
+              properties:
+                status:
+                  type: integer
+                error:
+                  type: string
+                error_description:
+                  type: string
+            example:
+              value:
+                error: unauthorized_action
+                error_description: Invalid issuer "<issuer>"
+                status: 403
+      - description: Required scope is missing
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              - error
+              properties:
+                status:
+                  type: integer
+                error:
+                  type: string
+                error_description:
+                  type: string
+            example:
+              value:
+                error: unauthorized_action
+                error_description: \"<scope>\" is required to access this endpoint
+                status: 403
+      - description: User is unauthorized for the tenant
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              - error
+              properties:
+                status:
+                  type: integer
+                error:
+                  type: string
+                error_description:
+                  type: string
+            example:
+              value:
+                error: unauthorized_action
+                error_description: User is unauthorized for this tenant
+                status: 403
     InvalidAudience:
       description: Invalid audience is used
       content:
@@ -3661,8 +2720,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3682,8 +2741,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3703,8 +2762,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3724,8 +2783,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3740,46 +2799,46 @@ definitions:
               status: 403
     Unauthorized:
       anyOf:
-        - description: Invalid authorization scheme
-          context:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - error
-                properties:
-                  status:
-                    type: integer
-                  error:
-                    type: string
-                  error_description:
-                    type: string
-              example:
-                value:
-                  error: unauthorized_request
-                  error_description: Authentication scheme must be Bearer
-                  status: 401
-        - description: Authorization token is missing
-          context:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - status
-                  - error
-                properties:
-                  status:
-                    type: integer
-                  error:
-                    type: string
-                  error_description:
-                    type: string
-              example:
-                value:
-                  error: unauthorized_request
-                  error_description: Missing authorization header
-                  status: 401
+      - description: Invalid authorization scheme
+        context:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              - error
+              properties:
+                status:
+                  type: integer
+                error:
+                  type: string
+                error_description:
+                  type: string
+            example:
+              value:
+                error: unauthorized_request
+                error_description: Authentication scheme must be Bearer
+                status: 401
+      - description: Authorization token is missing
+        context:
+          application/json:
+            schema:
+              type: object
+              required:
+              - status
+              - error
+              properties:
+                status:
+                  type: integer
+                error:
+                  type: string
+                error_description:
+                  type: string
+            example:
+              value:
+                error: unauthorized_request
+                error_description: Missing authorization header
+                status: 401
     InvalidAuthorizationScheme:
       description: Invalid authorization scheme
       context:
@@ -3787,8 +2846,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3808,8 +2867,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3829,8 +2888,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3842,7 +2901,8 @@ definitions:
             value:
               status: 409
               error: already_exists
-              error_description: \"<resource>\" with provided \"<field>\" already exists.
+              error_description: \"<resource>\" with provided \"<field>\" already
+                exists.
     InvalidField:
       description: Invalid field used in query
       content:
@@ -3850,8 +2910,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3871,8 +2931,8 @@ definitions:
           schema:
             type: object
             required:
-              - status
-              - error
+            - status
+            - error
             properties:
               status:
                 type: integer
@@ -3933,9 +2993,8 @@ components:
     q:
       name: q
       in: query
-      description: >-
-        Additional query in [PlusAuth Query
-        Language](https://docs.plusauth.com/api/core/query-syntax) format.
+      description: Additional query in [PlusAuth Query Language](https://docs.plusauth.com/api/core/query-syntax)
+        format.
       required: false
       schema:
         type: string
@@ -3952,27 +3011,39 @@ components:
     HookType:
       type: string
       enum:
-        - pre_register
-        - post_register
-        - pre_login
-        - post_login
-        - pre_mfa
-        - pre_access_token
-        - pre_id_token
-        - pre_fc_import
-        - pre_fc_export
+      - pre_register
+      - post_register
+      - pre_login
+      - post_login
+      - pre_mfa
+      - pre_access_token
+      - pre_id_token
+      - pre_fc_import
+      - pre_fc_export
 servers:
-  - url: '{apiUrl}/api'
-    variables:
-      apiUrl:
-        default: https://app.rhoova.com
-        enum:
-          - https://app.rhoova.com
+- url: "{apiUrl}/api"
+  variables:
+    apiUrl:
+      default: https://app.rhoova.com
+      enum:
+      - https://app.rhoova.com
 tags: []
 security:
-  - ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
-    secretKey: []
-  - apiKey: []
+- ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: X-API-Key
+  secretKey: []
+- apiKey: []
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
