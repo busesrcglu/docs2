@@ -3596,10 +3596,8 @@ paths:
                         - sell
                     strike:
                       type: number
-                      format: float
                     underlyingPrice:
                       type: number
-                      format: float
                     volatility:
                       type: number
                       format: float
