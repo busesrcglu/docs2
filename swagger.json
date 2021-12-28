@@ -12,7 +12,7 @@ paths:
       - BearerAuth:
         - read:client
       tags:
-      - calculations
+      - Calculations
       parameters:
       - name: taskId
         in: path
@@ -115,7 +115,7 @@ paths:
       - BearerAuth:
         - read:client
       tags:
-      - calculations
+      - Calculations
       requestBody:
         description: Client object
         required: true
@@ -841,7 +841,7 @@ paths:
       - BearerAuth:
         - read:client
       tags:
-      - calculations
+      - Calculations
       requestBody:
         description: Client object
         required: true
@@ -2356,7 +2356,7 @@ paths:
       - BearerAuth:
         - read:client
       tags:
-      - calculations
+      - Calculations
       requestBody:
         description: Client object
         required: true
@@ -3301,7 +3301,7 @@ paths:
       - BearerAuth:
         - read:client
       tags:
-      - calculations
+      - Calculations
       requestBody:
         description: Client object
         required: true
@@ -4101,7 +4101,6 @@ components:
       - pre_fc_import
       - pre_fc_export
     v1:
-      summary: Version 1
       type: object
       required:
       - notional
@@ -5201,395 +5200,392 @@ components:
                   - mid
             interestRate:
               type: object
-              items:
-                type: object
-                required:
-                - settlementDays
-                - intpMethod
-                - currency
-                - instruments
-                properties:
-                  settlementDays:
-                    type: number
-                  intpMethod:
-                    type: string
-                    enum:
-                    - LINEAR
-                    - LOGCUBIC
-                    - CUBIC
-                    - LOGLINEAR
-                  currency:
-                    type: string
-                  calendar:
-                    type: string
-                    enum:
-                    - TARGET
-                    - Turkey
-                    - UnitedStates
-                    - UnitedKingdom
-                    - Israel
-                    - Poland
-                    - Slovakia
-                    - Romania
-                    - Indonesia
-                    - SouthAfrica
-                    - Germany
-                    - CzechRepublic
-                    - SouthKorea
-                    - BespokeCalendar
-                    - Japan
-                    - Singapore
-                    - Switzerland
-                    - Taiwan
-                    - China
-                    - Brazil
-                    - Italy
-                    - Finland
-                    - Botswana
-                    - Mexico
-                    - Ukraine
-                    - India
-                    - HongKong
-                    - Sweden
-                    - Iceland
-                    - SaudiArabia
-                    - NewZealand
-                    - Denmark
-                    - Russia
-                    - Argentina
-                    - NullCalendar
-                    - Thailand
-                    - WeekendsOnly
-                    - France
-                    - Norway
-                  dayCounter:
-                    type: string
-                    enum:
-                    - Actual360
-                    - Actual360Fixed
-                    - Actual365Fixed
-                    - ActualActual
-                    - Business252
-                    - OneDayCounter
-                    - SimpleDayCounter
-                    - Thirty360
-                    - Actual365
-                    - ActualActualİSMA
-                    - ActualActualİSDA
-                    - ActualActualAFB
-                    - ActualActualEURO
-                  period:
-                    type: string
-                  instruments:
-                    type: object
-                    properties:
-                      DEPO:
-                        type: object
-                        properties:
-                          businessDayConvention:
-                            type: string
-                            enum:
-                            - following
-                            - modifiedFollowing
-                            - preceding
-                            - modifiedPreceding
-                            - unadjusted
-                            - halfMonthModifiedFollowing
-                            - nearest
-                            - Following
-                            - ModifiedFollowing
-                            - Preceding
-                            - ModifiedPreceding
-                            - Unadjusted
-                            - HalfMonthModifiedFollowing
-                            - Nearest
-                          dayCounter:
-                            type: string
-                            enum:
-                            - Actual360
-                            - Actual360Fixed
-                            - Actual365Fixed
-                            - ActualActual
-                            - Business252
-                            - OneDayCounter
-                            - SimpleDayCounter
-                            - Thirty360
-                            - Actual365
-                            - ActualActualİSMA
-                            - ActualActualİSDA
-                            - ActualActualAFB
-                            - ActualActualEURO
-                      OIS:
-                        type: object
-                        properties:
-                          businessDayConvention:
-                            type: string
-                            enum:
-                            - following
-                            - modifiedFollowing
-                            - preceding
-                            - modifiedPreceding
-                            - unadjusted
-                            - halfMonthModifiedFollowing
-                            - nearest
-                            - Following
-                            - ModifiedFollowing
-                            - Preceding
-                            - ModifiedPreceding
-                            - Unadjusted
-                            - HalfMonthModifiedFollowing
-                            - Nearest
-                          dayCounter:
-                            type: string
-                            enum:
-                            - Actual360
-                            - Actual360Fixed
-                            - Actual365Fixed
-                            - ActualActual
-                            - Business252
-                            - OneDayCounter
-                            - SimpleDayCounter
-                            - Thirty360
-                            - Actual365
-                            - ActualActualİSMA
-                            - ActualActualİSDA
-                            - ActualActualAFB
-                            - ActualActualEURO
-                          frequency:
-                            type:
-                            - string
-                            - 'null'
-                            transform:
-                            - toEnumCase
-                            enum:
-                            - NoFrequency
-                            - Once
-                            - Annual
-                            - Semiannual
-                            - EveryFourthMonth
-                            - Quarterly
-                            - Bimonthly
-                            - Monthly
-                            - EveryFourthWeek
-                            - Biweekly
-                            - Weekly
-                            - Daily
-                            - OtherFrequency
+              required:
+              - settlementDays
+              - intpMethod
+              - currency
+              - instruments
+              properties:
+                settlementDays:
+                  type: number
+                intpMethod:
+                  type: string
+                  enum:
+                  - LINEAR
+                  - LOGCUBIC
+                  - CUBIC
+                  - LOGLINEAR
+                currency:
+                  type: string
+                calendar:
+                  type: string
+                  enum:
+                  - TARGET
+                  - Turkey
+                  - UnitedStates
+                  - UnitedKingdom
+                  - Israel
+                  - Poland
+                  - Slovakia
+                  - Romania
+                  - Indonesia
+                  - SouthAfrica
+                  - Germany
+                  - CzechRepublic
+                  - SouthKorea
+                  - BespokeCalendar
+                  - Japan
+                  - Singapore
+                  - Switzerland
+                  - Taiwan
+                  - China
+                  - Brazil
+                  - Italy
+                  - Finland
+                  - Botswana
+                  - Mexico
+                  - Ukraine
+                  - India
+                  - HongKong
+                  - Sweden
+                  - Iceland
+                  - SaudiArabia
+                  - NewZealand
+                  - Denmark
+                  - Russia
+                  - Argentina
+                  - NullCalendar
+                  - Thailand
+                  - WeekendsOnly
+                  - France
+                  - Norway
+                dayCounter:
+                  type: string
+                  enum:
+                  - Actual360
+                  - Actual360Fixed
+                  - Actual365Fixed
+                  - ActualActual
+                  - Business252
+                  - OneDayCounter
+                  - SimpleDayCounter
+                  - Thirty360
+                  - Actual365
+                  - ActualActualİSMA
+                  - ActualActualİSDA
+                  - ActualActualAFB
+                  - ActualActualEURO
+                period:
+                  type: string
+                instruments:
+                  type: object
+                  properties:
+                    DEPO:
+                      type: object
+                      properties:
+                        businessDayConvention:
+                          type: string
+                          enum:
+                          - following
+                          - modifiedFollowing
+                          - preceding
+                          - modifiedPreceding
+                          - unadjusted
+                          - halfMonthModifiedFollowing
+                          - nearest
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                        dayCounter:
+                          type: string
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                    OIS:
+                      type: object
+                      properties:
+                        businessDayConvention:
+                          type: string
+                          enum:
+                          - following
+                          - modifiedFollowing
+                          - preceding
+                          - modifiedPreceding
+                          - unadjusted
+                          - halfMonthModifiedFollowing
+                          - nearest
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                        dayCounter:
+                          type: string
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                        frequency:
+                          type:
+                          - string
+                          - 'null'
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - NoFrequency
+                          - Once
+                          - Annual
+                          - Semiannual
+                          - EveryFourthMonth
+                          - Quarterly
+                          - Bimonthly
+                          - Monthly
+                          - EveryFourthWeek
+                          - Biweekly
+                          - Weekly
+                          - Daily
+                          - OtherFrequency
             riskFreeRate:
               type: object
-              items:
-                required:
-                - settlementDays
-                - intpMethod
-                - currency
-                - instruments
-                properties:
-                  settlementDays:
-                    type: number
-                  intpMethod:
-                    type: string
-                    enum:
-                    - LINEAR
-                    - LOGCUBIC
-                    - CUBIC
-                    - LOGLINEAR
-                  currency:
-                    type: string
-                  calendar:
-                    type: string
-                    enum:
-                    - TARGET
-                    - Turkey
-                    - UnitedStates
-                    - UnitedKingdom
-                    - Israel
-                    - Poland
-                    - Slovakia
-                    - Romania
-                    - Indonesia
-                    - SouthAfrica
-                    - Germany
-                    - CzechRepublic
-                    - SouthKorea
-                    - BespokeCalendar
-                    - Japan
-                    - Singapore
-                    - Switzerland
-                    - Taiwan
-                    - China
-                    - Brazil
-                    - Italy
-                    - Finland
-                    - Botswana
-                    - Mexico
-                    - Ukraine
-                    - India
-                    - HongKong
-                    - Sweden
-                    - Iceland
-                    - SaudiArabia
-                    - NewZealand
-                    - Denmark
-                    - Russia
-                    - Argentina
-                    - NullCalendar
-                    - Thailand
-                    - WeekendsOnly
-                    - France
-                    - Norway
-                  dayCounter:
-                    type: string
-                    enum:
-                    - Actual360
-                    - Actual360Fixed
-                    - Actual365Fixed
-                    - ActualActual
-                    - Business252
-                    - OneDayCounter
-                    - SimpleDayCounter
-                    - Thirty360
-                    - Actual365
-                    - ActualActualİSMA
-                    - ActualActualİSDA
-                    - ActualActualAFB
-                    - ActualActualEURO
-                  period:
-                    type: string
-                  instruments:
-                    type: object
-                    properties:
-                      DEPO:
-                        type: object
-                        properties:
-                          businessDayConvention:
-                            type: string
-                            enum:
-                            - following
-                            - modifiedFollowing
-                            - preceding
-                            - modifiedPreceding
-                            - unadjusted
-                            - halfMonthModifiedFollowing
-                            - nearest
-                            - Following
-                            - ModifiedFollowing
-                            - Preceding
-                            - ModifiedPreceding
-                            - Unadjusted
-                            - HalfMonthModifiedFollowing
-                            - Nearest
-                          dayCounter:
-                            type: string
-                            enum:
-                            - Actual360
-                            - Actual360Fixed
-                            - Actual365Fixed
-                            - ActualActual
-                            - Business252
-                            - OneDayCounter
-                            - SimpleDayCounter
-                            - Thirty360
-                            - Actual365
-                            - ActualActualİSMA
-                            - ActualActualİSDA
-                            - ActualActualAFB
-                            - ActualActualEURO
-                      FUTURES:
-                        type: object
-                        properties:
-                          businessDayConvention:
-                            type: string
-                            enum:
-                            - following
-                            - modifiedFollowing
-                            - preceding
-                            - modifiedPreceding
-                            - unadjusted
-                            - halfMonthModifiedFollowing
-                            - nearest
-                            - Following
-                            - ModifiedFollowing
-                            - Preceding
-                            - ModifiedPreceding
-                            - Unadjusted
-                            - HalfMonthModifiedFollowing
-                            - Nearest
-                          dayCounter:
-                            type: string
-                            enum:
-                            - Actual360
-                            - Actual360Fixed
-                            - Actual365Fixed
-                            - ActualActual
-                            - Business252
-                            - OneDayCounter
-                            - SimpleDayCounter
-                            - Thirty360
-                            - Actual365
-                            - ActualActualİSMA
-                            - ActualActualİSDA
-                            - ActualActualAFB
-                            - ActualActualEURO
-                          market:
-                            type: string
-                          usedates:
-                            type: boolean
-                      IRS:
-                        type: object
-                        properties:
-                          businessDayConvention:
-                            type: string
-                            enum:
-                            - following
-                            - modifiedFollowing
-                            - preceding
-                            - modifiedPreceding
-                            - unadjusted
-                            - halfMonthModifiedFollowing
-                            - nearest
-                            - Following
-                            - ModifiedFollowing
-                            - Preceding
-                            - ModifiedPreceding
-                            - Unadjusted
-                            - HalfMonthModifiedFollowing
-                            - Nearest
-                          dayCounter:
-                            type: string
-                            enum:
-                            - Actual360
-                            - Actual360Fixed
-                            - Actual365Fixed
-                            - ActualActual
-                            - Business252
-                            - OneDayCounter
-                            - SimpleDayCounter
-                            - Thirty360
-                            - Actual365
-                            - ActualActualİSMA
-                            - ActualActualİSDA
-                            - ActualActualAFB
-                            - ActualActualEURO
-                          frequency:
-                            type:
-                            - string
-                            - 'null'
-                            transform:
-                            - toEnumCase
-                            enum:
-                            - NoFrequency
-                            - Once
-                            - Annual
-                            - Semiannual
-                            - EveryFourthMonth
-                            - Quarterly
-                            - Bimonthly
-                            - Monthly
-                            - EveryFourthWeek
-                            - Biweekly
-                            - Weekly
-                            - Daily
-                            - OtherFrequency
+              required:
+              - settlementDays
+              - intpMethod
+              - currency
+              - instruments
+              properties:
+                settlementDays:
+                  type: number
+                intpMethod:
+                  type: string
+                  enum:
+                  - LINEAR
+                  - LOGCUBIC
+                  - CUBIC
+                  - LOGLINEAR
+                currency:
+                  type: string
+                calendar:
+                  type: string
+                  enum:
+                  - TARGET
+                  - Turkey
+                  - UnitedStates
+                  - UnitedKingdom
+                  - Israel
+                  - Poland
+                  - Slovakia
+                  - Romania
+                  - Indonesia
+                  - SouthAfrica
+                  - Germany
+                  - CzechRepublic
+                  - SouthKorea
+                  - BespokeCalendar
+                  - Japan
+                  - Singapore
+                  - Switzerland
+                  - Taiwan
+                  - China
+                  - Brazil
+                  - Italy
+                  - Finland
+                  - Botswana
+                  - Mexico
+                  - Ukraine
+                  - India
+                  - HongKong
+                  - Sweden
+                  - Iceland
+                  - SaudiArabia
+                  - NewZealand
+                  - Denmark
+                  - Russia
+                  - Argentina
+                  - NullCalendar
+                  - Thailand
+                  - WeekendsOnly
+                  - France
+                  - Norway
+                dayCounter:
+                  type: string
+                  enum:
+                  - Actual360
+                  - Actual360Fixed
+                  - Actual365Fixed
+                  - ActualActual
+                  - Business252
+                  - OneDayCounter
+                  - SimpleDayCounter
+                  - Thirty360
+                  - Actual365
+                  - ActualActualİSMA
+                  - ActualActualİSDA
+                  - ActualActualAFB
+                  - ActualActualEURO
+                period:
+                  type: string
+                instruments:
+                  type: object
+                  properties:
+                    DEPO:
+                      type: object
+                      properties:
+                        businessDayConvention:
+                          type: string
+                          enum:
+                          - following
+                          - modifiedFollowing
+                          - preceding
+                          - modifiedPreceding
+                          - unadjusted
+                          - halfMonthModifiedFollowing
+                          - nearest
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                        dayCounter:
+                          type: string
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                    FUTURES:
+                      type: object
+                      properties:
+                        businessDayConvention:
+                          type: string
+                          enum:
+                          - following
+                          - modifiedFollowing
+                          - preceding
+                          - modifiedPreceding
+                          - unadjusted
+                          - halfMonthModifiedFollowing
+                          - nearest
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                        dayCounter:
+                          type: string
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                        market:
+                          type: string
+                        usedates:
+                          type: boolean
+                    IRS:
+                      type: object
+                      properties:
+                        businessDayConvention:
+                          type: string
+                          enum:
+                          - following
+                          - modifiedFollowing
+                          - preceding
+                          - modifiedPreceding
+                          - unadjusted
+                          - halfMonthModifiedFollowing
+                          - nearest
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                        dayCounter:
+                          type: string
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                        frequency:
+                          type:
+                          - string
+                          - 'null'
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - NoFrequency
+                          - Once
+                          - Annual
+                          - Semiannual
+                          - EveryFourthMonth
+                          - Quarterly
+                          - Bimonthly
+                          - Monthly
+                          - EveryFourthWeek
+                          - Biweekly
+                          - Weekly
+                          - Daily
+                          - OtherFrequency
             hestonInitial:
               type: object
               required:
@@ -5628,7 +5624,11 @@ components:
                 type: string
                 oneOf:
                 - maxLength: 0
-                - format: date
+                  type:
+                  - string
+                  - 'null'
+                - type: string
+                  format: date
                   minLength: 1
               settlementDate:
                 type: string
