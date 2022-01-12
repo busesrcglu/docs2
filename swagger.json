@@ -3184,7 +3184,6 @@ components:
       - pre_fc_export
     v1:
       type: object
-      description: selam
       required:
       - notional
       - valuationDate
