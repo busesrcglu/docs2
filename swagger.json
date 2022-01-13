@@ -3183,6 +3183,7 @@ components:
       - pre_fc_import
       - pre_fc_export
     v1:
+      description: address information of the alitus customer
       type: object
       required:
       - notional
