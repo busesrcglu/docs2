@@ -3184,7 +3184,6 @@ components:
       - pre_fc_export
     fixedRateBondv1:
       type: object
-      title: v1
       required:
       - notional
       - valuationDate
@@ -4106,7 +4105,6 @@ components:
                   type: string
     fixedRateBondv2:
       type: object
-      title: v2
       required:
       - notional
       - valuationDate
@@ -5216,8 +5214,8 @@ components:
                 - minLength: 1
                   type: boolean
     vanillaOptionv1:
+      description: address information of the alitus customer
       type: object
-      title: v1
       required:
       - notional
       - valuationDate
@@ -5767,7 +5765,6 @@ components:
                   default: 0.01
     vanillaOptionv2:
       type: object
-      title: v2
       required:
       - notional
       - valuationDate
