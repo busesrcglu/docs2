@@ -77,7 +77,6 @@ paths:
       tags:
       - nodeClient
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -117,7 +116,6 @@ paths:
       tags:
       - Calculations
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -620,6 +618,55 @@ paths:
                               - Daily
                               - OtherFrequency
                               description: Schedule payment frequency.
+                        OIS:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                            frequency:
+                              type: string
+                              enum:
+                              - NoFrequency
+                              - Once
+                              - Annual
+                              - Semiannual
+                              - EveryFourthMonth
+                              - Quarterly
+                              - Bimonthly
+                              - Monthly
+                              - EveryFourthWeek
+                              - Biweekly
+                              - Weekly
+                              - Daily
+                              - OtherFrequency
                 yieldData:
                   type: array(Array of objects(YieldData))
                   items:
@@ -1728,6 +1775,55 @@ paths:
                               - Daily
                               - OtherFrequency
                               description: Schedule payment frequency.
+                        OIS:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                            frequency:
+                              type: string
+                              enum:
+                              - NoFrequency
+                              - Once
+                              - Annual
+                              - Semiannual
+                              - EveryFourthMonth
+                              - Quarterly
+                              - Bimonthly
+                              - Monthly
+                              - EveryFourthWeek
+                              - Biweekly
+                              - Weekly
+                              - Daily
+                              - OtherFrequency
                 floatingLegForecastCurve:
                   type: object
                   required:
@@ -2103,6 +2199,55 @@ paths:
                               - Daily
                               - OtherFrequency
                               description: Schedule payment frequency.
+                        OIS:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                            frequency:
+                              type: string
+                              enum:
+                              - NoFrequency
+                              - Once
+                              - Annual
+                              - Semiannual
+                              - EveryFourthMonth
+                              - Quarterly
+                              - Bimonthly
+                              - Monthly
+                              - EveryFourthWeek
+                              - Biweekly
+                              - Weekly
+                              - Daily
+                              - OtherFrequency
                 yieldData:
                   type: array
                   items:
@@ -3184,6 +3329,7 @@ components:
       - pre_fc_export
     fixedRateBondv1:
       type: object
+      description: v111 description
       required:
       - notional
       - valuationDate
@@ -6686,6 +6832,55 @@ components:
                           - 'null'
                           transform:
                           - toEnumCase
+                          enum:
+                          - NoFrequency
+                          - Once
+                          - Annual
+                          - Semiannual
+                          - EveryFourthMonth
+                          - Quarterly
+                          - Bimonthly
+                          - Monthly
+                          - EveryFourthWeek
+                          - Biweekly
+                          - Weekly
+                          - Daily
+                          - OtherFrequency
+                    OIS:
+                      type: object
+                      additionalProperties: false
+                      properties:
+                        businessDayConvention:
+                          type: string
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                        dayCounter:
+                          type: string
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Actual360
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                        frequency:
+                          type: string
                           enum:
                           - NoFrequency
                           - Once
