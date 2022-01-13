@@ -890,7 +890,6 @@ paths:
       tags:
       - Calculations
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2503,7 +2502,6 @@ paths:
       tags:
       - Calculations
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2530,7 +2528,6 @@ paths:
       tags:
       - Calculations
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2557,7 +2554,6 @@ paths:
       tags:
       - nodeClient
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2623,7 +2619,6 @@ paths:
       tags:
       - nodeClient
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2693,7 +2688,6 @@ paths:
       tags:
       - pythonClient
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2733,7 +2727,6 @@ paths:
       tags:
       - pythonClient
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
@@ -2799,7 +2792,6 @@ paths:
       tags:
       - pythonClient
       requestBody:
-        description: Client object
         required: true
         content:
           application/json:
