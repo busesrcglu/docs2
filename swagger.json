@@ -2364,8 +2364,8 @@ paths:
           application/json:
             schema:
               oneOf:
-              - "$ref": "#/components/fixedRateBondSchemas/v1"
-              - "$ref": "#/components/fixedRateBondSchemas/v2"
+              - "$ref": "#/components/schemas/v1"
+              - "$ref": "#/components/schemas/v2"
       responses:
         '200':
           description: Created
@@ -4760,7 +4760,7 @@ components:
               value:
                 type: number
                 format: float
-  fixedRateBondSchemas:
+  schemas:
     v1:
       type: object
       required:
