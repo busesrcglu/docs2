@@ -4761,6 +4761,18 @@ components:
                 type: number
                 format: float
   schemas:
+    HookType:
+      type: string
+      enum:
+      - pre_register
+      - post_register
+      - pre_login
+      - post_login
+      - pre_mfa
+      - pre_access_token
+      - pre_id_token
+      - pre_fc_import
+      - pre_fc_export
     v1:
       type: object
       required:
