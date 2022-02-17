@@ -116,6 +116,7 @@ paths:
       tags:
       - Calculations
       requestBody:
+        description: Client object
         required: true
         content:
           application/json:
@@ -129,7 +130,6 @@ paths:
                 valuationDate:
                   type: string
                   format: date
-                  pattern: YYYY-MM-DD
                 zeroRates:
                   type: object
                   additionalProperties: false
@@ -146,6 +146,8 @@ paths:
                       type:
                       - string
                       - 'null'
+                      transform:
+                      - toEnumCase
                       enum:
                       - Continuous
                       - Compounded
@@ -157,7 +159,8 @@ paths:
                       type:
                       - string
                       - 'null'
-                      default: Annual
+                      transform:
+                      - toEnumCase
                       enum:
                       - NoFrequency
                       - Once
@@ -190,16 +193,15 @@ paths:
                           startDate:
                             type: string
                             format: date
-                            pattern: YYYY-MM-DD
                           endDate:
                             type: string
                             format: date
-                            pattern: YYYY-MM-DD
                     compounding:
                       type:
                       - string
                       - 'null'
-                      default: Continuous
+                      transform:
+                      - toEnumCase
                       enum:
                       - Continuous
                       - Compounded
@@ -210,7 +212,8 @@ paths:
                       type:
                       - string
                       - 'null'
-                      default: Annual
+                      transform:
+                      - toEnumCase
                       enum:
                       - NoFrequency
                       - Once
@@ -225,7 +228,6 @@ paths:
                       - Weekly
                       - Daily
                       - OtherFrequency
-                      description: Schedule payment frequency
                 discountRates:
                   type: object
                   additionalProperties: false
@@ -247,18 +249,22 @@ paths:
                   - instruments
                   properties:
                     settlementDays:
-                      type: Integer
-                      description: Curve settlement days
+                      type: number
                     intpMethod:
                       type: string
+                      transform:
+                      - toEnumCase
                       enum:
                       - Linear
                       - LogLinear
                       - Cubic
                       - LogCubic
                     currency:
-                      type: string(currency)
+                      type: string
+                      transform:
+                      - toEnumCase
                       enum:
+                      - EURUSD
                       - AED
                       - AFN
                       - ALL
@@ -421,9 +427,10 @@ paths:
                       - ZAR
                       - ZMW
                       - ZWL
-                      description: 3 letter ISO currency code
                     calendar:
                       type: string
+                      transform:
+                      - toEnumCase
                       enum:
                       - TARGET
                       - Turkey
@@ -466,37 +473,58 @@ paths:
                       - Norway
                     dayCounter:
                       type: string
-                      enum:
-                      - Actual360
-                      - Actual365Fixed
-                      - ActualActual
-                      - Business252
-                      - OneDayCounter
-                      - SimpleDayCounter
-                      - Thirty360
-                      - Actual365
-                      - ActualActualİSMA
-                      - ActualActualİSDA
-                      - ActualActualAFB
-                      - ActualActualEURO
-                      description: Accrual day counter
                     period:
-                      type: string(period)
-                      description: Schedule payment period
+                      type: string
                     applyShock:
-                      type: array
-                      items:
-                        type: object
+                      description: If the method is parallel, it must be tenor:"all"
+                        and only one record
+                      oneOf:
+                      - type: array
+                        items:
+                          type: object
+                          additionalProperties: false
+                          required:
+                          - tenor
+                          - shockValue
+                          properties:
+                            tenor:
+                              type: string
+                            shockValue:
+                              type: number
+                              format: double
+                      - type: object
                         additionalProperties: false
                         required:
-                        - tenor
-                        - shockValue
+                        - method
+                        - shockValues
                         properties:
-                          tenor:
+                          method:
                             type: string
-                          shockValue:
-                            type: number
-                            format: double
+                            transform:
+                            - toEnumCase
+                            enum:
+                            - parallel
+                            - nonparallel
+                            - keyrate
+                          shockValues:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                tenor:
+                                  type: string
+                                shockValue:
+                                  type: number
+                        if:
+                          method:
+                            enum:
+                            - parallel
+                        then:
+                          shockValues:
+                            tenor:
+                              enum:
+                              - all
+                              maxLength: '1'
                     endOfMonth:
                       type: boolean
                       default: 'true'
@@ -509,7 +537,9 @@ paths:
                           additionalProperties: false
                           properties:
                             businessDayConvention:
-                              type: string(businessDayConvention)
+                              type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - Following
                               - ModifiedFollowing
@@ -519,7 +549,9 @@ paths:
                               - HalfMonthModifiedFollowing
                               - Nearest
                             dayCounter:
-                              type: string(dayCounter)
+                              type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - Actual360
                               - Actual365Fixed
@@ -533,13 +565,47 @@ paths:
                               - ActualActualİSDA
                               - ActualActualAFB
                               - ActualActualEURO
-                              description: Accrual day counter
+                        FRA:
+                          type: object
+                          additionalProperties: false
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              transform:
+                              - toEnumCase
+                              enum:
+                              - Actual360
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
                         FUTURES:
                           type: object
                           additionalProperties: false
                           properties:
                             businessDayConvention:
-                              type: string(businessDayConvention)
+                              type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - Following
                               - ModifiedFollowing
@@ -549,7 +615,9 @@ paths:
                               - HalfMonthModifiedFollowing
                               - Nearest
                             dayCounter:
-                              type: string(dayCounter)
+                              type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - Actual360
                               - Actual365Fixed
@@ -563,9 +631,10 @@ paths:
                               - ActualActualİSDA
                               - ActualActualAFB
                               - ActualActualEURO
-                              description: Accrual day counter
                             market:
                               type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - IMM
                               - ASX
@@ -576,7 +645,9 @@ paths:
                           additionalProperties: false
                           properties:
                             businessDayConvention:
-                              type: string(businessDayConvention)
+                              type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - Following
                               - ModifiedFollowing
@@ -586,7 +657,9 @@ paths:
                               - HalfMonthModifiedFollowing
                               - Nearest
                             dayCounter:
-                              type: string(dayCounter)
+                              type: string
+                              transform:
+                              - toEnumCase
                               enum:
                               - Actual360
                               - Actual365Fixed
@@ -600,7 +673,6 @@ paths:
                               - ActualActualİSDA
                               - ActualActualAFB
                               - ActualActualEURO
-                              description: Accrual day counter
                             frequency:
                               type: string
                               enum:
@@ -617,7 +689,6 @@ paths:
                               - Weekly
                               - Daily
                               - OtherFrequency
-                              description: Schedule payment frequency.
                         OIS:
                           type: object
                           additionalProperties: false
@@ -667,37 +738,73 @@ paths:
                               - Weekly
                               - Daily
                               - OtherFrequency
+                        BONDS:
+                          type: object
+                          properties:
+                            businessDayConvention:
+                              type: string
+                              enum:
+                              - following
+                              - modifiedFollowing
+                              - preceding
+                              - modifiedPreceding
+                              - unadjusted
+                              - halfMonthModifiedFollowing
+                              - nearest
+                              - Following
+                              - ModifiedFollowing
+                              - Preceding
+                              - ModifiedPreceding
+                              - Unadjusted
+                              - HalfMonthModifiedFollowing
+                              - Nearest
+                            dayCounter:
+                              type: string
+                              enum:
+                              - Actual360
+                              - Actual360Fixed
+                              - Actual365Fixed
+                              - ActualActual
+                              - Business252
+                              - OneDayCounter
+                              - SimpleDayCounter
+                              - Thirty360
+                              - Actual365
+                              - ActualActualİSMA
+                              - ActualActualİSDA
+                              - ActualActualAFB
+                              - ActualActualEURO
+                            simplexLambda:
+                              type: number
+                            accuracy:
+                              type: number
+                            numberOfIterations:
+                              type: number
+                            method:
+                              type: string
                 yieldData:
-                  type: array(Array of objects(YieldData))
+                  type: array
                   items:
                     type: object
-                    additionalProperties: false
-                    required:
-                    - valuationDate
-                    - maturityDate
-                    - currency
-                    - instrument
-                    - tenor
-                    - value
-                    - period
-                    - settlementDate
                     properties:
                       valuationDate:
-                        type: string
-                        format: date
-                        pattern: YYYY-MM-DD
-                      maturityDate:
-                        type: string
                         oneOf:
-                        - type: string
+                        - type: 'null'
                           maxLength: 0
                         - type: string
                           format: date
                           minLength: 1
-                          pattern: YYYY-MM-DD
+                      maturityDate:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - format: date
+                          type: string
+                          minLength: 1
                       currency:
                         type: string
                         enum:
+                        - EURUSD
                         - AED
                         - AFN
                         - ALL
@@ -860,17 +967,167 @@ paths:
                         - ZAR
                         - ZMW
                         - ZWL
-                        description: 3 letter ISO currency code
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: string
                       instrument:
                         type: string
-                      tenor:
-                        type: string
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: string
                       value:
-                        type: number
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: number
+                          float: float
                       period:
-                        type: string
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: string
                       settlementDate:
-                        type: string
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: string
+                      couponRate:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          format: float
+                          type: number
+                      dayCounter:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: string
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                          - 30E/360
+                          - Thirty360E
+                      issueDate:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - format: date
+                          type: string
+                          minLength: 1
+                      redemption:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - type: string
+                          minLength: 1
+                      dateGeneration:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - type: string
+                          minLength: 1
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Backward
+                          - Forward
+                          - Zero
+                          - ThirdWednesday
+                          - Twentieth
+                          - TwentiethIMM
+                          - OldCDS
+                          - CDS
+                          - CDS2015
+                      businessDayConvention:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - type: string
+                          minLength: 1
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                      maturityDayConvention:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - type: string
+                          minLength: 1
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                      endOfMonth:
+                        oneOf:
+                        - maxLength: 0
+                          type: 'null'
+                        - minLength: 1
+                          type: boolean
+                  if:
+                    properties:
+                      instruments:
+                        not:
+                          maxLength: 0
+                  then:
+                    required:
+                    - valuationDate
+                    - maturityDate
+                    - currency
+                    - instrument
+                    - tenor
+                    - value
+                    - period
+                    - settlementDate
+                  else:
+                    required:
+                    - valuationDate
+                    - maturityDate
+                    - currency
+                    - couponRate
+                    - dayCounter
+                    - issueDate
+                    - redemption
+                    - dateGeneration
+                    - businessDayConvention
+                    - maturityDayConvention
+                    - endOfMonth
+                    - value
+                    - period
       responses:
         '200':
           description: Created
