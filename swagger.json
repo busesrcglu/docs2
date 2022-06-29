@@ -5163,37 +5163,14 @@ paths:
                       - string
                       - 'null'
                       enum:
-                      - TRLibor6M
-                      - TRLibor1Y
-                      - Euribor1Y
-                      - Euribor1M
-                      - Euribor10M
-                      - Euribor11M
-                      - Euribor2M
-                      - Euribor2W
-                      - USDLiborON
-                      - GBPLiborON
-                      - Euribor3M
-                      - Euribor4M
-                      - Euribor5M
-                      - Euribor6M
-                      - Euribor7M
-                      - Euribor8M
-                      - Euribor9M
-                      - EURLibor10M
-                      - EURLibor11M
-                      - EURLibor1M
-                      - EURLibor1Y
-                      - EURLibor2M
-                      - EURLibor2W
-                      - EURLibor3M
-                      - EURLibor4M
-                      - EURLibor5M
-                      - EURLibor6M,
-                      - EURLibor7M
-                      - EURLibor8M
-                      - EURLibor9M
-                      - EURLiborON
+                      - Aonia
+                      - Eonia
+                      - Estr
+                      - FedFunds
+                      - Nzocr
+                      - Sofr
+                      - Sonia
+                      - Tona
                     dayCounter:
                       type: string
                       enum:
