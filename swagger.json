@@ -18886,6 +18886,2871 @@ paths:
                 properties:
                   taskId:
                     type: string
+  "/tasks/ndf":
+    post:
+      summary: Create NDF Calculation
+      security:
+      - BearerAuth:
+        - read:client
+      tags:
+      - Calculations
+      requestBody:
+        description: Client object
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - valuationDate
+              - settlementDate
+              - maturityDate
+              - spotPrice
+              - shortLeg
+              - longLeg
+              - shortLegDiscountCurve
+              - longLegDiscountCurve
+              - yieldData
+              properties:
+                valuationDate:
+                  type: string
+                  format: date
+                settlementDate:
+                  type: string
+                  format: date
+                  formatMinimum:
+                    "$data": 1/valuationDate
+                maturityDate:
+                  type: string
+                  format: date
+                startDate:
+                  type: string
+                  format: date
+                spotPrice:
+                  type: number
+                  format: double
+                shortLeg:
+                  type: object
+                  required:
+                  - notional
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - businessDayConvention
+                  - endOfMonth
+                  properties:
+                    notional:
+                      type: number
+                    currency:
+                      type: string
+                      enum:
+                      - EURUSD
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTN
+                      - BWP
+                      - BYR
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CKD
+                      - CLP
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - FOK
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KID
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TVD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XCD
+                      - XOF
+                      - XPF
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Russia
+                      - Argentina
+                      - NullCalendar
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Actual360
+                      - Actual360Fixed
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                      - 30E/360
+                      - Thirty360E
+                    businessDayConvention:
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - type: string
+                        minLength: 1
+                        transform:
+                        - toEnumCase
+                        enum:
+                        - Following
+                        - ModifiedFollowing
+                        - Preceding
+                        - ModifiedPreceding
+                        - Unadjusted
+                        - HalfMonthModifiedFollowing
+                        - Nearest
+                    endOfMonth:
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - minLength: 1
+                        type: boolean
+                longLeg:
+                  type: object
+                  required:
+                  - notional
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - businessDayConvention
+                  - endOfMonth
+                  properties:
+                    notional:
+                      type: number
+                    currency:
+                      type: string
+                      enum:
+                      - EURUSD
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTN
+                      - BWP
+                      - BYR
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CKD
+                      - CLP
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - FOK
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KID
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TVD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XCD
+                      - XOF
+                      - XPF
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Russia
+                      - Argentina
+                      - NullCalendar
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Actual360
+                      - Actual360Fixed
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                      - 30E/360
+                      - Thirty360E
+                    businessDayConvention:
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - type: string
+                        minLength: 1
+                        transform:
+                        - toEnumCase
+                        enum:
+                        - Following
+                        - ModifiedFollowing
+                        - Preceding
+                        - ModifiedPreceding
+                        - Unadjusted
+                        - HalfMonthModifiedFollowing
+                        - Nearest
+                    endOfMonth:
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - minLength: 1
+                        type: boolean
+                shortLegDiscountCurve:
+                  type: object
+                  required:
+                  - settlementDays
+                  - intpMethod
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - period
+                  - instruments
+                  properties:
+                    settlementDays:
+                      type: number
+                    intpMethod:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Linear
+                      - LogLinear
+                      - Cubic
+                      - LogCubic
+                    currency:
+                      type: string
+                      enum:
+                      - EURUSD
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTN
+                      - BWP
+                      - BYR
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CKD
+                      - CLP
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - FOK
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KID
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TVD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XCD
+                      - XOF
+                      - XPF
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Russia
+                      - Argentina
+                      - NullCalendar
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Actual360
+                      - Actual360Fixed
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                    period:
+                      type: string
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - minLength: 1
+                        type: string
+                    instruments:
+                      type: object
+                      anyOf:
+                      - properties:
+                          DEPO:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                        required:
+                        - DEPO
+                      - properties:
+                          FUTURES:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              market:
+                                type: string
+                                enum:
+                                - IMM
+                                - ASX
+                              usedates:
+                                type: boolean
+                        required:
+                        - FUTURES
+                      - properties:
+                          IRS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              frequency:
+                                type:
+                                - string
+                                - 'null'
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - NoFrequency
+                                - Once
+                                - Annual
+                                - Semiannual
+                                - EveryFourthMonth
+                                - Quarterly
+                                - Bimonthly
+                                - Monthly
+                                - EveryFourthWeek
+                                - Biweekly
+                                - Weekly
+                                - Daily
+                                - OtherFrequency
+                        required:
+                        - IRS
+                      - properties:
+                          BONDS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              simplexLambda:
+                                type: number
+                                format: float
+                              accuracy:
+                                type: number
+                              numberOfIterations:
+                                type: number
+                              method:
+                                type: string
+                        required:
+                        - BONDS
+                      - properties:
+                          FRA:
+                            type: object
+                        required:
+                        - FRA
+                      - properties:
+                          OIS:
+                            type: object
+                        required:
+                        - OIS
+                      - properties:
+                          FWD:
+                            type: object
+                        required:
+                        - FWD
+                      - properties:
+                          BSSWAP:
+                            type: object
+                        required:
+                        - BSSWAP
+                      - properties:
+                          CCBS:
+                            type: object
+                        required:
+                        - CCBS
+                      - properties:
+                          CDS:
+                            type: object
+                        required:
+                        - CDS
+                      - properties:
+                          ZCISwap:
+                            type: object
+                        required:
+                        - ZCISwap
+                      - properties:
+                          YoYSwap:
+                            type: object
+                        required:
+                        - YoYSwap
+                shortLegForecastCurve:
+                  type: object
+                  required:
+                  - settlementDays
+                  - intpMethod
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - period
+                  - instruments
+                  properties:
+                    settlementDays:
+                      type: number
+                    intpMethod:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Linear
+                      - LogLinear
+                      - Cubic
+                      - LogCubic
+                    currency:
+                      type: string
+                      enum:
+                      - EURUSD
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTN
+                      - BWP
+                      - BYR
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CKD
+                      - CLP
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - FOK
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KID
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TVD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XCD
+                      - XOF
+                      - XPF
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Russia
+                      - Argentina
+                      - NullCalendar
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Actual360
+                      - Actual360Fixed
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                    period:
+                      type: string
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - minLength: 1
+                        type: string
+                    instruments:
+                      type: object
+                      anyOf:
+                      - properties:
+                          DEPO:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                        required:
+                        - DEPO
+                      - properties:
+                          FUTURES:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              market:
+                                type: string
+                                enum:
+                                - IMM
+                                - ASX
+                              usedates:
+                                type: boolean
+                        required:
+                        - FUTURES
+                      - properties:
+                          IRS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              frequency:
+                                type:
+                                - string
+                                - 'null'
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - NoFrequency
+                                - Once
+                                - Annual
+                                - Semiannual
+                                - EveryFourthMonth
+                                - Quarterly
+                                - Bimonthly
+                                - Monthly
+                                - EveryFourthWeek
+                                - Biweekly
+                                - Weekly
+                                - Daily
+                                - OtherFrequency
+                        required:
+                        - IRS
+                      - properties:
+                          BONDS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              simplexLambda:
+                                type: number
+                                format: float
+                              accuracy:
+                                type: number
+                              numberOfIterations:
+                                type: number
+                              method:
+                                type: string
+                        required:
+                        - BONDS
+                      - properties:
+                          FRA:
+                            type: object
+                        required:
+                        - FRA
+                      - properties:
+                          OIS:
+                            type: object
+                        required:
+                        - OIS
+                      - properties:
+                          FWD:
+                            type: object
+                        required:
+                        - FWD
+                      - properties:
+                          BSSWAP:
+                            type: object
+                        required:
+                        - BSSWAP
+                      - properties:
+                          CCBS:
+                            type: object
+                        required:
+                        - CCBS
+                      - properties:
+                          CDS:
+                            type: object
+                        required:
+                        - CDS
+                      - properties:
+                          ZCISwap:
+                            type: object
+                        required:
+                        - ZCISwap
+                      - properties:
+                          YoYSwap:
+                            type: object
+                        required:
+                        - YoYSwap
+                longLegDiscountCurve:
+                  type: object
+                  required:
+                  - settlementDays
+                  - intpMethod
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - period
+                  - instruments
+                  properties:
+                    settlementDays:
+                      type: number
+                    intpMethod:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Linear
+                      - LogLinear
+                      - Cubic
+                      - LogCubic
+                    currency:
+                      type: string
+                      enum:
+                      - EURUSD
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTN
+                      - BWP
+                      - BYR
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CKD
+                      - CLP
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - FOK
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KID
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TVD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XCD
+                      - XOF
+                      - XPF
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Russia
+                      - Argentina
+                      - NullCalendar
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Actual360
+                      - Actual360Fixed
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                    period:
+                      type: string
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - minLength: 1
+                        type: string
+                    instruments:
+                      type: object
+                      anyOf:
+                      - properties:
+                          DEPO:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                        required:
+                        - DEPO
+                      - properties:
+                          FUTURES:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              market:
+                                type: string
+                                enum:
+                                - IMM
+                                - ASX
+                              usedates:
+                                type: boolean
+                        required:
+                        - FUTURES
+                      - properties:
+                          IRS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              frequency:
+                                type:
+                                - string
+                                - 'null'
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - NoFrequency
+                                - Once
+                                - Annual
+                                - Semiannual
+                                - EveryFourthMonth
+                                - Quarterly
+                                - Bimonthly
+                                - Monthly
+                                - EveryFourthWeek
+                                - Biweekly
+                                - Weekly
+                                - Daily
+                                - OtherFrequency
+                        required:
+                        - IRS
+                      - properties:
+                          BONDS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              simplexLambda:
+                                type: number
+                                format: float
+                              accuracy:
+                                type: number
+                              numberOfIterations:
+                                type: number
+                              method:
+                                type: string
+                        required:
+                        - BONDS
+                      - properties:
+                          FRA:
+                            type: object
+                        required:
+                        - FRA
+                      - properties:
+                          OIS:
+                            type: object
+                        required:
+                        - OIS
+                      - properties:
+                          FWD:
+                            type: object
+                        required:
+                        - FWD
+                      - properties:
+                          BSSWAP:
+                            type: object
+                        required:
+                        - BSSWAP
+                      - properties:
+                          CCBS:
+                            type: object
+                        required:
+                        - CCBS
+                      - properties:
+                          CDS:
+                            type: object
+                        required:
+                        - CDS
+                      - properties:
+                          ZCISwap:
+                            type: object
+                        required:
+                        - ZCISwap
+                      - properties:
+                          YoYSwap:
+                            type: object
+                        required:
+                        - YoYSwap
+                longLegForecastCurve:
+                  type: object
+                  required:
+                  - settlementDays
+                  - intpMethod
+                  - currency
+                  - calendar
+                  - dayCounter
+                  - period
+                  - instruments
+                  properties:
+                    settlementDays:
+                      type: number
+                    intpMethod:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Linear
+                      - LogLinear
+                      - Cubic
+                      - LogCubic
+                    currency:
+                      type: string
+                      enum:
+                      - EURUSD
+                      - AED
+                      - AFN
+                      - ALL
+                      - AMD
+                      - ANG
+                      - AOA
+                      - ARS
+                      - AUD
+                      - AWG
+                      - AZN
+                      - BAM
+                      - BBD
+                      - BDT
+                      - BGN
+                      - BHD
+                      - BIF
+                      - BMD
+                      - BND
+                      - BOB
+                      - BRL
+                      - BSD
+                      - BTN
+                      - BWP
+                      - BYR
+                      - BZD
+                      - CAD
+                      - CDF
+                      - CHF
+                      - CKD
+                      - CLP
+                      - CNY
+                      - COP
+                      - CRC
+                      - CUP
+                      - CVE
+                      - CZK
+                      - DJF
+                      - DKK
+                      - DOP
+                      - DZD
+                      - EGP
+                      - ERN
+                      - ETB
+                      - EUR
+                      - FJD
+                      - FKP
+                      - FOK
+                      - GBP
+                      - GEL
+                      - GGP
+                      - GHS
+                      - GIP
+                      - GMD
+                      - GNF
+                      - GTQ
+                      - GYD
+                      - HKD
+                      - HNL
+                      - HRK
+                      - HTG
+                      - HUF
+                      - IDR
+                      - ILS
+                      - IMP
+                      - INR
+                      - IQD
+                      - IRR
+                      - ISK
+                      - JEP
+                      - JMD
+                      - JOD
+                      - JPY
+                      - KES
+                      - KGS
+                      - KHR
+                      - KID
+                      - KMF
+                      - KPW
+                      - KRW
+                      - KWD
+                      - KYD
+                      - KZT
+                      - LAK
+                      - LBP
+                      - LKR
+                      - LRD
+                      - LSL
+                      - LYD
+                      - MAD
+                      - MDL
+                      - MGA
+                      - MKD
+                      - MMK
+                      - MNT
+                      - MOP
+                      - MRO
+                      - MUR
+                      - MVR
+                      - MWK
+                      - MXN
+                      - MYR
+                      - MZN
+                      - NAD
+                      - NGN
+                      - NIO
+                      - NOK
+                      - NPR
+                      - NZD
+                      - OMR
+                      - PAB
+                      - PEN
+                      - PGK
+                      - PHP
+                      - PKR
+                      - PLN
+                      - PYG
+                      - QAR
+                      - RON
+                      - RSD
+                      - RUB
+                      - RWF
+                      - SAR
+                      - SBD
+                      - SCR
+                      - SDG
+                      - SEK
+                      - SGD
+                      - SHP
+                      - SLL
+                      - SOS
+                      - SRD
+                      - SSP
+                      - STD
+                      - SYP
+                      - SZL
+                      - THB
+                      - TJS
+                      - TMT
+                      - TND
+                      - TOP
+                      - TRY
+                      - TTD
+                      - TVD
+                      - TWD
+                      - TZS
+                      - UAH
+                      - UGX
+                      - USD
+                      - UYU
+                      - UZS
+                      - VEF
+                      - VND
+                      - VUV
+                      - WST
+                      - XAF
+                      - XCD
+                      - XOF
+                      - XPF
+                      - YER
+                      - ZAR
+                      - ZMW
+                      - ZWL
+                    calendar:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - TARGET
+                      - Turkey
+                      - UnitedStates
+                      - UnitedKingdom
+                      - Israel
+                      - Poland
+                      - Slovakia
+                      - Romania
+                      - Indonesia
+                      - SouthAfrica
+                      - Germany
+                      - CzechRepublic
+                      - SouthKorea
+                      - BespokeCalendar
+                      - Japan
+                      - Singapore
+                      - Switzerland
+                      - Taiwan
+                      - China
+                      - Brazil
+                      - Italy
+                      - Finland
+                      - Botswana
+                      - Mexico
+                      - Ukraine
+                      - India
+                      - HongKong
+                      - Sweden
+                      - Iceland
+                      - SaudiArabia
+                      - NewZealand
+                      - Denmark
+                      - Russia
+                      - Argentina
+                      - NullCalendar
+                      - Thailand
+                      - WeekendsOnly
+                      - France
+                      - Norway
+                    dayCounter:
+                      type: string
+                      transform:
+                      - toEnumCase
+                      enum:
+                      - Actual360
+                      - Actual360Fixed
+                      - Actual365Fixed
+                      - ActualActual
+                      - Business252
+                      - OneDayCounter
+                      - SimpleDayCounter
+                      - Thirty360
+                      - Actual365
+                      - ActualActualİSMA
+                      - ActualActualİSDA
+                      - ActualActualAFB
+                      - ActualActualEURO
+                    period:
+                      type: string
+                      oneOf:
+                      - maxLength: 0
+                        type: string
+                      - minLength: 1
+                        type: string
+                    instruments:
+                      type: object
+                      anyOf:
+                      - properties:
+                          DEPO:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                        required:
+                        - DEPO
+                      - properties:
+                          FUTURES:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              market:
+                                type: string
+                                enum:
+                                - IMM
+                                - ASX
+                              usedates:
+                                type: boolean
+                        required:
+                        - FUTURES
+                      - properties:
+                          IRS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              frequency:
+                                type:
+                                - string
+                                - 'null'
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - NoFrequency
+                                - Once
+                                - Annual
+                                - Semiannual
+                                - EveryFourthMonth
+                                - Quarterly
+                                - Bimonthly
+                                - Monthly
+                                - EveryFourthWeek
+                                - Biweekly
+                                - Weekly
+                                - Daily
+                                - OtherFrequency
+                        required:
+                        - IRS
+                      - properties:
+                          BONDS:
+                            type: object
+                            properties:
+                              businessDayConvention:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Following
+                                - ModifiedFollowing
+                                - Preceding
+                                - ModifiedPreceding
+                                - Unadjusted
+                                - HalfMonthModifiedFollowing
+                                - Nearest
+                              dayCounter:
+                                type: string
+                                transform:
+                                - toEnumCase
+                                enum:
+                                - Actual360
+                                - Actual360Fixed
+                                - Actual365Fixed
+                                - ActualActual
+                                - Business252
+                                - OneDayCounter
+                                - SimpleDayCounter
+                                - Thirty360
+                                - Actual365
+                                - ActualActualİSMA
+                                - ActualActualİSDA
+                                - ActualActualAFB
+                                - ActualActualEURO
+                                - 30E/360
+                                - Thirty360E
+                              simplexLambda:
+                                type: number
+                                format: float
+                              accuracy:
+                                type: number
+                              numberOfIterations:
+                                type: number
+                              method:
+                                type: string
+                        required:
+                        - BONDS
+                      - properties:
+                          FRA:
+                            type: object
+                        required:
+                        - FRA
+                      - properties:
+                          OIS:
+                            type: object
+                        required:
+                        - OIS
+                      - properties:
+                          FWD:
+                            type: object
+                        required:
+                        - FWD
+                      - properties:
+                          BSSWAP:
+                            type: object
+                        required:
+                        - BSSWAP
+                      - properties:
+                          CCBS:
+                            type: object
+                        required:
+                        - CCBS
+                      - properties:
+                          CDS:
+                            type: object
+                        required:
+                        - CDS
+                      - properties:
+                          ZCISwap:
+                            type: object
+                        required:
+                        - ZCISwap
+                      - properties:
+                          YoYSwap:
+                            type: object
+                        required:
+                        - YoYSwap
+                yieldData:
+                  tenorControl: true
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      valuationDate:
+                        oneOf:
+                        - type: string
+                          maxLength: 0
+                        - type: string
+                          format: date
+                          minLength: 1
+                      tenor:
+                        description: 'It should contain numbers and ''D'',''W'',''M'',''Y''.
+                          For example: ''3M''. If the instrument value is ''FRA'',
+                          it must contain the tenor ''X''.'
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - type: string
+                          minLength: 1
+                      maturityDate:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - format: date
+                          type: string
+                          minLength: 1
+                      currency:
+                        type: string
+                        enum:
+                        - EURUSD
+                        - AED
+                        - AFN
+                        - ALL
+                        - AMD
+                        - ANG
+                        - AOA
+                        - ARS
+                        - AUD
+                        - AWG
+                        - AZN
+                        - BAM
+                        - BBD
+                        - BDT
+                        - BGN
+                        - BHD
+                        - BIF
+                        - BMD
+                        - BND
+                        - BOB
+                        - BRL
+                        - BSD
+                        - BTN
+                        - BWP
+                        - BYR
+                        - BZD
+                        - CAD
+                        - CDF
+                        - CHF
+                        - CKD
+                        - CLP
+                        - CNY
+                        - COP
+                        - CRC
+                        - CUP
+                        - CVE
+                        - CZK
+                        - DJF
+                        - DKK
+                        - DOP
+                        - DZD
+                        - EGP
+                        - ERN
+                        - ETB
+                        - EUR
+                        - FJD
+                        - FKP
+                        - FOK
+                        - GBP
+                        - GEL
+                        - GGP
+                        - GHS
+                        - GIP
+                        - GMD
+                        - GNF
+                        - GTQ
+                        - GYD
+                        - HKD
+                        - HNL
+                        - HRK
+                        - HTG
+                        - HUF
+                        - IDR
+                        - ILS
+                        - IMP
+                        - INR
+                        - IQD
+                        - IRR
+                        - ISK
+                        - JEP
+                        - JMD
+                        - JOD
+                        - JPY
+                        - KES
+                        - KGS
+                        - KHR
+                        - KID
+                        - KMF
+                        - KPW
+                        - KRW
+                        - KWD
+                        - KYD
+                        - KZT
+                        - LAK
+                        - LBP
+                        - LKR
+                        - LRD
+                        - LSL
+                        - LYD
+                        - MAD
+                        - MDL
+                        - MGA
+                        - MKD
+                        - MMK
+                        - MNT
+                        - MOP
+                        - MRO
+                        - MUR
+                        - MVR
+                        - MWK
+                        - MXN
+                        - MYR
+                        - MZN
+                        - NAD
+                        - NGN
+                        - NIO
+                        - NOK
+                        - NPR
+                        - NZD
+                        - OMR
+                        - PAB
+                        - PEN
+                        - PGK
+                        - PHP
+                        - PKR
+                        - PLN
+                        - PYG
+                        - QAR
+                        - RON
+                        - RSD
+                        - RUB
+                        - RWF
+                        - SAR
+                        - SBD
+                        - SCR
+                        - SDG
+                        - SEK
+                        - SGD
+                        - SHP
+                        - SLL
+                        - SOS
+                        - SRD
+                        - SSP
+                        - STD
+                        - SYP
+                        - SZL
+                        - THB
+                        - TJS
+                        - TMT
+                        - TND
+                        - TOP
+                        - TRY
+                        - TTD
+                        - TVD
+                        - TWD
+                        - TZS
+                        - UAH
+                        - UGX
+                        - USD
+                        - UYU
+                        - UZS
+                        - VEF
+                        - VND
+                        - VUV
+                        - WST
+                        - XAF
+                        - XCD
+                        - XOF
+                        - XPF
+                        - YER
+                        - ZAR
+                        - ZMW
+                        - ZWL
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                      instrument:
+                        type: string
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                      value:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: number
+                          float: float
+                      period:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                      settlementDate:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                      couponRate:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          format: float
+                          type: number
+                      dayCounter:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: string
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Actual360
+                          - Actual360Fixed
+                          - Actual365Fixed
+                          - ActualActual
+                          - Business252
+                          - OneDayCounter
+                          - SimpleDayCounter
+                          - Thirty360
+                          - Actual365
+                          - ActualActualİSMA
+                          - ActualActualİSDA
+                          - ActualActualAFB
+                          - ActualActualEURO
+                          - 30E/360
+                          - Thirty360E
+                      issueDate:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - format: date
+                          type: string
+                          minLength: 1
+                      redemption:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - type: number
+                          minLength: 1
+                      dateGeneration:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - type: string
+                          minLength: 1
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Backward
+                          - Forward
+                          - Zero
+                          - ThirdWednesday
+                          - Twentieth
+                          - TwentiethIMM
+                          - OldCDS
+                          - CDS
+                          - CDS2015
+                      businessDayConvention:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - type: string
+                          minLength: 1
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                      maturityDayConvention:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - type: string
+                          minLength: 1
+                          transform:
+                          - toEnumCase
+                          enum:
+                          - Following
+                          - ModifiedFollowing
+                          - Preceding
+                          - ModifiedPreceding
+                          - Unadjusted
+                          - HalfMonthModifiedFollowing
+                          - Nearest
+                      endOfMonth:
+                        oneOf:
+                        - maxLength: 0
+                          type: string
+                        - minLength: 1
+                          type: boolean
+                  if:
+                    properties:
+                      instruments:
+                        not:
+                          maxLength: 0
+                  then:
+                    required:
+                    - valuationDate
+                    - maturityDate
+                    - currency
+                    - instrument
+                    - tenor
+                    - value
+                    - period
+                    - settlementDate
+                  else:
+                    required:
+                    - valuationDate
+                    - maturityDate
+                    - currency
+                    - couponRate
+                    - dayCounter
+                    - issueDate
+                    - redemption
+                    - dateGeneration
+                    - businessDayConvention
+                    - maturityDayConvention
+                    - endOfMonth
+                    - value
+                    - period
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskId:
+                    type: string
   "/data-sources":
     post:
       summary: Load Method
