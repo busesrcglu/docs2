@@ -13186,7 +13186,7 @@ paths:
                 maturityDate:
                   type: string
                   format: date
-                issueDate:
+                startDate:
                   type: string
                   format: date
                 spotPrice:
@@ -16033,6 +16033,7 @@ paths:
               - valuationDate
               - settlementDate
               - maturityDate
+              - startDate
               - spotPrice
               - shortLeg
               - longLeg
@@ -16051,7 +16052,7 @@ paths:
                 maturityDate:
                   type: string
                   format: date
-                issueDate:
+                startDate:
                   type: string
                   format: date
                 spotPrice:
