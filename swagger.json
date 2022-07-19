@@ -21810,10 +21810,12 @@ paths:
                   - currency
                   - dayCounter
                   - calendar
+                  - resetTable
                   - businessDayConvention
                   - maturityDayConvention
                   - dateGeneration
                   - endOfMonth
+                  - ''
                   - runningCapitalExchange
                   - initialNominal
                   - fixingDate
@@ -22198,6 +22200,7 @@ paths:
                   - dateGeneration
                   - endOfMonth
                   - runningCapitalExchange
+                  - resetTable
                   - initialNominal
                   - fixingDate
                   - fixingRate
