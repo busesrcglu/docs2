@@ -1344,7 +1344,7 @@ paths:
                 fixedLeg:
                   type: object
                   required:
-                  - payorreceive
+                  - payOrReceive
                   - coupon
                   - frequency
                   - dayCounter
@@ -1354,7 +1354,7 @@ paths:
                   - dateGeneration
                   - endOfMonth
                   properties:
-                    payorreceive:
+                    payOrReceive:
                       type: string
                       transform:
                       - toEnumCase
