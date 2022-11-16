@@ -2062,85 +2062,9 @@ paths:
                 shortLegForecastCurve:
                   "$ref": "#/components/schemas/forecastCurve"
                 longLegDiscountCurve:
-                  type: object
-                  required:
-                  - settlementDays
-                  - intpMethod
-                  - currency
-                  - calendar
-                  - dayCounter
-                  - period
-                  - instruments
-                  properties:
-                    settlementDays:
-                      type: number
-                    intpMethod:
-                      type: string
-                      transform:
-                      - toEnumCase
-                      enum:
-                      - Linear
-                      - LogLinear
-                      - Cubic
-                      - LogCubic
-                    currency:
-                      "$ref": "#/components/schemas/currency"
-                    calendar:
-                      "$ref": "#/components/schemas/calendar"
-                    dayCounter:
-                      "$ref": "#/components/schemas/dayCounter"
-                    period:
-                      description: 'It should contain numbers and ''D'',''W'',''M'',''Y''.
-                        For example: ''3M''. If the instrument value is ''FRA'', it
-                        must contain the period ''X''.'
-                      oneOf:
-                      - maxLength: 0
-                        type: string
-                      - periodControl: true
-                        minLength: 1
-                        type: string
-                    instruments:
-                      "$ref": "#/components/schemas/instruments"
+                  "$ref": "#/components/schemas/discountCurve"
                 longLegForecastCurve:
-                  type: object
-                  required:
-                  - settlementDays
-                  - intpMethod
-                  - currency
-                  - calendar
-                  - dayCounter
-                  - period
-                  - instruments
-                  properties:
-                    settlementDays:
-                      type: number
-                    intpMethod:
-                      type: string
-                      transform:
-                      - toEnumCase
-                      enum:
-                      - Linear
-                      - LogLinear
-                      - Cubic
-                      - LogCubic
-                    currency:
-                      "$ref": "#/components/schemas/currency"
-                    calendar:
-                      "$ref": "#/components/schemas/calendar"
-                    dayCounter:
-                      "$ref": "#/components/schemas/dayCounter"
-                    period:
-                      description: 'It should contain numbers and ''D'',''W'',''M'',''Y''.
-                        For example: ''3M''. If the instrument value is ''FRA'', it
-                        must contain the period ''X''.'
-                      oneOf:
-                      - type: string
-                        maxLength: 0
-                      - type: string
-                        periodControl: true
-                        minLength: 1
-                    instruments:
-                      "$ref": "#/components/schemas/instruments"
+                  "$ref": "#/components/schemas/discountCurve"
                 yieldData:
                   "$ref": "#/components/schemas/yieldData"
       responses:
@@ -8358,7 +8282,7 @@ components:
                     contain the period ''X''.'
                   type: string
                 instruments:
-                  "$ref": "#/components/schemas/instruments"
+                  "$ref": "#/components/schemas/yieldCurve"
             riskFreeRate:
               type: object
               required:
@@ -8391,7 +8315,7 @@ components:
                     contain the period ''X''.'
                   type: string
                 instruments:
-                  "$ref": "#/components/schemas/instruments"
+                  "$ref": "#/components/schemas/yieldCurve"
             hestonInitial:
               type: object
               properties:
