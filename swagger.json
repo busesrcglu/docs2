@@ -6565,7 +6565,7 @@ paths:
                     endOfMonth:
                       type: boolean
                 inflationCurve:
-                  "$ref": "#/components/schemas/inflationCurveInstruments"
+                  "$ref": "#/components/schemas/inflationCurve"
                 discountCurve:
                   "$ref": "#/components/schemas/discountCurve"
                 forecastCurve:
